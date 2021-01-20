@@ -11,19 +11,20 @@ def test_hello():
 test_hello()
 
 #Test pour voir si la loss function fonctionne
-# def test_loss_function():
-#     predicted = Tensor
-#     actual = Tensor
-#     a = MeanSquareError()
-#     predicted = [1, 1, 1, 1, 1, 1]
-#     actual = [1, 1, 2, 1, 3, 1]
-#     mse = a.loss(predicted, actual)
-#     print('loss:', mse)
-#     print(predicted[0])
-#     print(actual[0])
-#     return mse
+def test_loss_function():
+    predicted = Tensor
+    actual = Tensor
+    a = MeanSquareError()
+    b = MeanSquareError()
+    predicted = [1, 1, 1, 1, 1, 1]
+    actual = [1, 1, 2, 1, 3, 1]
+    loss = a.loss(predicted, actual)
+    grad = b.grad(predicted, actual)
+    print('loss:', loss)
+    print('grad:', grad)
+    return 0
 
-#test_loss_function()
+test_loss_function()
 
     
 

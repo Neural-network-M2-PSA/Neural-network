@@ -21,9 +21,13 @@ class MeanSquareError(Loss):
         mse = 0
         for i in range(len(predicted)):
             mse += ((predicted[i] - actual[i])**2)
-            print('predicted[i]: ', predicted[i],'+actual[i]: ',actual[i], 'diffence: ',predicted[i] - actual[i])
+            print('predicted[i]: ', predicted[i],'+actual[i]: ',actual[i], 'diffence au carré: ',(predicted[i] - actual[i])**2)
 
         return mse
 
-    # def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
-    # return ...
+    def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
+        grad=0
+        for j in range(len(predicted)):
+            grad+= 2*(predicted[j]-actual[j])
+            print('predicted[i]: ', predicted[j], '+actual[i]: ', actual[j], 'grad: ', predicted[j] - actual[j])
+        return grad
