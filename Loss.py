@@ -18,9 +18,10 @@ class MeanSquareError(Loss):
 
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
 
-
+        mse = 0
         for i in range(len(predicted)):
-            mse = mse + (predicted[i] - actual[i]) ^ 2
+            mse += ((predicted[i] - actual[i])**2)
+            print('predicted[i]: ', predicted[i],'+actual[i]: ',actual[i], 'diffence: ',predicted[i] - actual[i])
 
         return mse
 
