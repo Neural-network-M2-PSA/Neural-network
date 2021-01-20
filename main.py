@@ -4,7 +4,7 @@ from typing import (Dict, Tuple, Callable,
 from numpy import ndarray as Tensor
 from Loss import Loss, MeanSquareError
 Func = Callable[[Tensor], Tensor]
-
+from Layer import Layer, Linear
 
 def test_hello():
     print('hello')
@@ -22,6 +22,12 @@ def test_loss_function():
     grad = b.grad(predicted, actual)
     print('loss:', loss)
     print('grad:', grad)
+
+
+    layer_test = Linear(6,1)
+    layer_test.forward(predicted)
+
+
     return 0
 
 test_loss_function()

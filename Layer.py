@@ -36,14 +36,25 @@ class Linear(Layer):
         """
         self.inputs = inputs
         # Compute here the feed forward pass
-        return ...
+        print(self.params["w"])
+        print(self.params["b"])
 
-    def backward(self, grad: Tensor) -> Tensor:
-        """
-        grad shape is (batch_size, output_size)
-        """
-        # Compute here the gradient parameters for the layer
-        self.grads["w"] = ...
-        self.grads["b"] = ...
-        # Compute here the feed backward pass
-        return ...  
+        w = np.dot(np.transpose(self.params["w"]), self.inputs)
+        z = np.transpose(w) + self.params["b"]
+
+        print(z)
+
+
+        a = Tensor
+
+        return a
+
+    # def backward(self, grad: Tensor) -> Tensor:
+    #     """
+    #     grad shape is (batch_size, output_size)
+    #     """
+    #     # Compute here the gradient parameters for the layer
+    #     self.grads["w"] = ...
+    #     self.grads["b"] = ...
+    #     # Compute here the feed backward pass
+    #     return ...
