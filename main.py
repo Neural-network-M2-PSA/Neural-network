@@ -10,7 +10,7 @@ def print_hi(name):
     print(f'Hi, {name}')
     print(f'Hi, {name}')
     print(f'Hi, {name}')
-
+    print('hello world')
 
 
 # Press the green button in the gutter to run the script.
@@ -21,3 +21,7 @@ if __name__ == '__main__':
 
 def test_Leila() :
     print('coucou')
+
+def test_quentin():
+    print('hello world')
+    
