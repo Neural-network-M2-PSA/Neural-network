@@ -14,10 +14,10 @@ def print_hi(name):
 def test_alizee():
     predicted = Tensor
     actual = Tensor
-    mse = MeanSquareError()
+    #mse = MeanSquareError()
     predicted = [1, 1, 1, 1, 1, 1]
     actual = [1, 1, 2, 1, 3, 4]
-    mse.loss(predicted, actual)
+    mse = loss(predicted, actual)
     print('loss:', mse)
     return mse
 
