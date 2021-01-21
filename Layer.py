@@ -3,6 +3,8 @@ from typing import (Dict, Tuple, Callable,
                     Sequence, Iterator, NamedTuple)
 from numpy import ndarray as Tensor
 
+from Loss import MeanSquareError, Loss
+
 Func = Callable[[Tensor], Tensor]
 
 class Layer:
@@ -45,7 +47,7 @@ class Linear(Layer):
         #print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
         #print('z = ',z)
 
-        ##Pour le linear layer
+        ##Pour le linear layer (FAUX)
         # print(self.params["w"])
         # print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
         # print(np.transpose(self.inputs))
@@ -56,24 +58,27 @@ class Linear(Layer):
         # print('z = ', z)
         # print('z_ shape: ', z.shape)
 
-        ##Pour le linear layer
+        ##Pour le linear layer (OK)
         print(self.params["w"])
         print(self.inputs)
         print(self.params["b"])
         z = np.dot(self.params["w"], self.inputs) + self.params["b"]
         print('z = ', z)
 
-
-        
-
         return z
 
-    # def backward(self, grad: Tensor) -> Tensor:
-    #     """
-    #     grad shape is (batch_size, output_size)
-    #     """
-    #     # Compute here the gradient parameters for the layer
-    #     self.grads["w"] = ...
-    #     self.grads["b"] = ...
-    #     # Compute here the feed backward pass
-    #     return ...
+    def backward(self, grad: Tensor) -> Tensor:
+         """
+         grad shape is (batch_size, output_size)
+         """
+         a = Tensor
+         b = MeanSquareError()
+         w = MeanSquareError()
+         # Compute here the gradient parameters for the layer
+         self.grads["w"] = w.grad(self.params["w"], self.inputs)
+         self.grads["b"] = w.grad(self.params["b"], self.inputs)
+         # Compute here the feed backward pass
+         a = [self.grads["w"], self.grads["b"]]
+         print("a : ", a)
+         return a
+

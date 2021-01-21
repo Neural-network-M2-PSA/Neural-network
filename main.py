@@ -54,6 +54,7 @@ def test_linear_layer():
     # Pour un seul neurone
     layer_test = Linear(4,4)
     layer_test.forward(predicted)
+    layer_test.backward(predicted)
 
     return 0
 test_linear_layer()

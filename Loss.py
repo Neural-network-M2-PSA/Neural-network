@@ -21,7 +21,7 @@ class MeanSquareError(Loss):
         mse = 0
         for i in range(len(predicted)):
             mse += ((predicted[i] - actual[i])**2)
-            print('predicted[i]: ', predicted[i],'+actual[i]: ',actual[i], 'diffence au carré: ',(predicted[i] - actual[i])**2)
+            print('predicted[i]: ', predicted[i],'+actual[i]: ',actual[i], 'difference au carré: ',(predicted[i] - actual[i])**2)
 
         return mse
 
