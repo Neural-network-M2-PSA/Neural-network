@@ -45,4 +45,15 @@ def test_one_neuron():
 
     return 0
     
-test_one_neuron()
+#test_one_neuron()
+
+def test_linear_layer():
+    predicted = Tensor
+    predicted = [1, 1, 1, 1]
+
+    # Pour un seul neurone
+    layer_test = Linear(4,4)
+    layer_test.forward(predicted)
+
+    return 0
+test_linear_layer()

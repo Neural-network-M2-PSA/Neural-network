@@ -46,8 +46,15 @@ class Linear(Layer):
         #print('z = ',z)
 
         ##Pour le linear layer
-
-
+        print(self.params["w"])
+        print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
+        print(np.transpose(self.inputs))
+        print('input_transpose shape: ', np.transpose(self.inputs).shape)
+        print(np.transpose(self.params["b"]))
+        print('b_ shape: ', np.transpose(self.params["b"]).shape)
+        z = np.dot(np.transpose(self.params["w"]), np.transpose(self.inputs)) + self.params["b"]
+        print('z = ', z)
+        print('z_ shape: ', z.shape)
 
 
         a = Tensor
