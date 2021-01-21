@@ -8,7 +8,7 @@ from Layer import Layer, Linear
 
 def test_hello():
     print('hello')
-test_hello()
+#test_hello()
 
 #Test pour voir si la loss function fonctionne
 def test_loss_function():
@@ -18,19 +18,31 @@ def test_loss_function():
     b = MeanSquareError()
     predicted = [1, 1, 1, 1, 1, 1]
     actual = [1, 1, 2, 1, 3, 1]
+
+    #Test pour la loss function et le grad de la loss function
     loss = a.loss(predicted, actual)
     grad = b.grad(predicted, actual)
-    print('loss:', loss)
-    print('grad:', grad)
+    #print('loss:', loss)
+    #print('grad:', grad)
 
-
-    layer_test = Linear(6,1)
-    layer_test.forward(predicted)
+    #Pour un seul neurone
+    #layer_test = Linear(6,1)
+    #layer_test.forward(predicted)
 
 
     return 0
 
-test_loss_function()
 
+
+# Test pour voir si un seul neurone fonctionne
+def test_one_neuron():
+    predicted = Tensor
+    predicted = [1, 1, 1, 1, 1, 1]
+
+    # Pour un seul neurone
+    layer_test = Linear(6,1)
+    layer_test.forward(predicted)
+
+    return 0
     
-
+test_one_neuron()

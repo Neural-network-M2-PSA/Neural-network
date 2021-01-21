@@ -36,13 +36,18 @@ class Linear(Layer):
         """
         self.inputs = inputs
         # Compute here the feed forward pass
-        print(self.params["w"])
-        print(self.params["b"])
+        #print(self.params["w"])
+        #print(self.params["b"])
 
-        w = np.dot(np.transpose(self.params["w"]), self.inputs)
-        z = np.transpose(w) + self.params["b"]
+        #Pour un seul neurone
+        #z = np.dot(np.transpose(self.params["w"]), np.transpose(self.inputs)) + self.params["b"]
+        #print('input_transpose shape: ', np.transpose(self.inputs).shape)
+        #print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
+        #print('z = ',z)
 
-        print(z)
+        ##Pour le linear layer
+
+
 
 
         a = Tensor
