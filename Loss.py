@@ -13,14 +13,13 @@ class Loss:
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
         raise NotImplementedError
 
-
 class MeanSquareError(Loss):
 
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
         mse = 0
         for i in range(len(predicted)):
             mse += ((predicted[i] - actual[i])**2)
-            print('predicted[i]: ', predicted[i],'+actual[i]: ',actual[i], 'difference au carré: ',(predicted[i] - actual[i])**2)
+            print('predicted[i]: ', predicted[i],'actual[i]: ',actual[i], 'difference au carré: ',(predicted[i] - actual[i])**2)
         return mse
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
