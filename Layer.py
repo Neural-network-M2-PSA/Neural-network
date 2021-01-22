@@ -62,8 +62,9 @@ class Linear(Layer):
         print(self.params["w"])
         print(self.inputs)
         print(self.params["b"])
-        z = np.dot(self.params["w"], self.inputs) + self.params["b"]
+        z = np.dot(np.transpose(self.params["w"]), self.inputs) + self.params["b"]
         print('z = ', z)
+
 
         return z
 
