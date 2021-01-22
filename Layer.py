@@ -76,7 +76,7 @@ class Linear(Layer):
          w = MeanSquareError()
          # Compute here the gradient parameters for the layer
          self.grads["w"] = w.grad(self.params["w"], self.inputs)
-         self.grads["b"] = w.grad(self.params["b"], self.inputs)
+         self.grads["b"] = b.grad(self.params["b"], self.inputs)
          # Compute here the feed backward pass
          a = [self.grads["w"], self.grads["b"]]
          print("a : ", a)
@@ -104,36 +104,34 @@ class Activation(Layer):
         return self.f_prime(self.inputs) * grad
 
 
-    def tanh(x: Tensor) -> Tensor:
-        res = Tensor
-        res = np.tanh(x)
-        return res
+def tanh(x: Tensor) -> Tensor:
+    res = Tensor
+    res = np.tanh(x)
+    return res
 
 
-    def tanh_prime(x: Tensor) -> Tensor:
-        res = Tensor
-        res = 1 - np.tanh(x)**2
-        return res
+def tanh_prime(x: Tensor) -> Tensor:
+    res = Tensor
+    res = 1 - np.tanh(x)**2
+    return res
 
 
 class Tanh(Activation):
     def __init__(self):
         super().__init__(tanh, tanh_prime)
 
+def sigmoid(x: Tensor) -> Tensor:
+    res = Tensor
+    res = 0.5 + 0.5*np.tanh(x/2)
+    return res
 
-    def sigmoid(x: Tensor) -> Tensor:
-        res = Tensor
-        res = 0.5 + 0.5*np.tanh(x/2)
-        return res
 
-    """
-    def sigmoid_prime(x: Tensor) -> Tensor:
-        res = Tensor
-         
-        return res
-    """
-    """
-    class Sigmoid(Activation):
-        def __init__(self):
-            super().__init__(sigmoid, sigmoid_prime)
-    """
+def sigmoid_prime(x: Tensor) -> Tensor:
+    res = Tensor
+    res = 0.25*(np.tanh(x/2))
+    return res
+
+
+class Sigmoid(Activation):
+    def __init__(self):
+        super().__init__(sigmoid, sigmoid_prime)
