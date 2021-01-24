@@ -34,3 +34,19 @@ def backward(self, grad: Tensor) -> Tensor:
     A = [self.grads["w"], self.grads["b"]]
     print("A : ", A)
     return A
+
+class Activation(Layer):
+    """
+    An activation layer transform only with a global function the inputs it gets
+    """
+    def __init__(self, f: Func, f_prime: Func) -> None:
+        super().__init__()
+        self.f = f
+        self.f_prime = f_prime
+
+    def forward(self, inputs: Tensor) -> Tensor:
+        self.inputs = inputs
+        return self.f(inputs)
+
+    def backward(self, grad: Tensor) -> Tensor:
+        return self.f_prime(self.inputs) * grad
