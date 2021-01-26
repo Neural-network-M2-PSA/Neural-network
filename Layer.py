@@ -21,8 +21,8 @@ class Layer:
 def forward(self, inputs: Tensor) -> Tensor:
 
     self.inputs = inputs
-    #z = np.transpose(self.params["w"])@self.inputs + self.params["b"]
-    #print('z = ',z)
+    z = np.transpose(self.params["w"])@self.inputs + self.params["b"]
+    print('z = ',z)
 
 def backward(self, grad: Tensor) -> Tensor:
 
