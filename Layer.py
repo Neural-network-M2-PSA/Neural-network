@@ -117,7 +117,7 @@ def sigmoid(x: Tensor) -> Tensor:
 
 def sigmoid_prime(x: Tensor) -> Tensor:
     res = Tensor
-    res = 0.25*(np.tanh(x/2))
+    res =1-0.25*np.tanh(x/2)**2)
     return res
 
 
