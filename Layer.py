@@ -113,6 +113,8 @@ def sigmoid_prime(x: Tensor) -> Tensor:
     #res =1-0.25*np.tanh(x/2)**2)
     return res
 
+#def relu(x: Tensor) -> Tensor:
+    #res = Tensor
 
 
 class Sigmoid(Activation):
