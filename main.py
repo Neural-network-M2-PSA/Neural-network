@@ -50,11 +50,12 @@ def test_one_neuron():
 def test_linear_layer():
     predicted = Tensor
     predicted = [1, 1, 1, 1]
+    #print("Predicted shape: ", predicted.shape)
 
-    # Pour un seul neurone
+
     layer_test = Linear(4,4)
     layer_test.forward(predicted)
-    layer_test.backward(predicted)
+    #layer_test.backward(predicted)
 
     return 0
 test_linear_layer()

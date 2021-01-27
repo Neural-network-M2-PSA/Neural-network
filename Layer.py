@@ -37,21 +37,13 @@ class Linear(Layer):
         inputs shape is (batch_size, input_size)
         """
         self.inputs = inputs
+        z = Tensor
         # Compute here the feed forward pass
-        #print(self.params["w"])
-        #print(self.params["b"])
-
-        #Pour un seul neurone
-        #z = np.dot(np.transpose(self.params["w"]), np.transpose(self.inputs)) + self.params["b"]
-        #print('input_transpose shape: ', np.transpose(self.inputs).shape)
-        #print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
-        #print('z = ',z)
-
 
         ##Pour le linear layer (OK)
-        print(self.params["w"])
-        print(self.inputs)
-        print(self.params["b"])
+        #print("w: ",self.params["w"], " Shape: ",self.params["w"].shape)
+        #print("input: ",self.inputs, " Shape: ",self.inputs)
+        #print("b: ",self.params["b"], " Shape: ",self.params["b"].shape)
         z = np.dot(np.transpose(self.params["w"]), self.inputs) + self.params["b"]
         print('z = ', z)
         return z
@@ -60,16 +52,16 @@ class Linear(Layer):
          """
          grad shape is (batch_size, output_size)
          """
-         a = Tensor
+         res = Tensor
          b = MeanSquareError()
          w = MeanSquareError()
          # Compute here the gradient parameters for the layer
-         self.grads["w"] = w.grad(self.params["w"], self.inputs)
-         self.grads["b"] = b.grad(self.params["b"], self.inputs)
+         self.grads["w"] = np.dot(grad, self.inputs)
+         self.grads["b"] = b.grad(self.params["b"], grad)
          # Compute here the feed backward pass
-         a = [self.grads["w"], self.grads["b"]]
-         print("a : ", a)
-         return a
+         res = [self.grads["w"], self.grads["b"]]
+         print("res : ", res)
+         return res
 
 class Activation(Layer):
     """
@@ -117,7 +109,7 @@ def sigmoid(x: Tensor) -> Tensor:
 
 def sigmoid_prime(x: Tensor) -> Tensor:
     res = Tensor
-    res =1-0.25*np.tanh(x/2)**2)
+    #res =1-0.25*np.tanh(x/2)**2)
     return res
 
 
