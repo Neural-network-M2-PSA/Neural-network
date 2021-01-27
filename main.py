@@ -1,23 +1,22 @@
-# This is a sample Python script.
+import Librairie_v2 as lib2
+import numpy as np
+import pandas as pd
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    print(f'Hi, {name}')
-    print(f'Hi, {name}')
-    print(f'Hi, {name}')
+data = pd.read_csv('dataset.csv')
+#print(data.head())
+set_size = 1000
+data_test_input = np.array(data[['cosTBz','R2','chiProb']][0:set_size])
+data_test_target = np.array(data[['isSignal']][0:set_size])
 
 
+my_layer1 = lib2.Linear(3,3)
+my_layer2 = lib2.Sigmoid()
+my_layer3 = lib2.Linear(3,1)
+my_layer4 = lib2.Sigmoid()
+my_NN = lib2.NeuralNet([my_layer1,my_layer2,my_layer3,my_layer4])
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+train(my_NN, data_test_input, data_test_target, batch_size = 32,size_training=set_size,num_epochs = 5000)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-
-def test_Leila() :
-    print('coucou')
+data_test_validation = np.array(data[['cosTBz','R2','chiProb']][set_size:set_size+100])
+data_test_validation_target = np.array(data[['isSignal']][set_size:set_size+100])
+print(prediction(my_NN,data_test_validation))
