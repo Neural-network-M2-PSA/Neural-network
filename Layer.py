@@ -42,8 +42,8 @@ class Linear(Layer):
 
         ##Pour le linear layer (OK)
         #print("w: ",self.params["w"], " Shape: ",self.params["w"].shape)
-        #print("input: ",self.inputs, " Shape: ",self.inputs)
-        #print("b: ",self.params["b"], " Shape: ",self.params["b"].shape)
+        print("Shape 1: ",np.dot(np.transpose(self.params["w"]), self.inputs).shape)
+        print("Shape 2: ",self.params["b"].shape)
         z = np.dot(np.transpose(self.params["w"]), self.inputs) + self.params["b"]
         print('z = ', z)
         return z
