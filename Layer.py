@@ -64,6 +64,9 @@ class Linear(Layer):
          #print("Backward effectué")
          return res
 
+    def type(self) -> str:
+        return 'linear'
+
 class Activation(Layer):
     """
     An activation layer just applies a function
@@ -85,6 +88,8 @@ class Activation(Layer):
         """
         return self.f_prime(self.inputs) * grad
 
+    def type(self)->str:
+        return 'Activation'
 
 def tanh(x: Tensor) -> Tensor:
     res = Tensor

@@ -14,9 +14,11 @@ class Optimizer:
         raise NotImplementedError
 
 class StochasticGradientDescent(Optimizer):
-    def __init__(self, learningRate:float=0.01) -> None:
+    def __init__(self, learningRate: float=0.01) -> None:
         self.learningRate = learningRate
 
     def step(self, net: NeuralNet) -> None:
         for param, grad in net.params_and_grads():
-            
+            param = param - self.learningRate*grad
+            grad = grad - self.learningRate*grad
+
