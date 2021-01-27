@@ -47,16 +47,6 @@ class Linear(Layer):
         #print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
         #print('z = ',z)
 
-        ##Pour le linear layer (FAUX)
-        # print(self.params["w"])
-        # print('w_transpose shape: ', np.transpose(self.params["w"]).shape)
-        # print(np.transpose(self.inputs))
-        # print('input_transpose shape: ', np.transpose(self.inputs).shape)
-        # print(np.transpose(self.params["b"]))
-        # print('b_ shape: ', np.transpose(self.params["b"]).shape)
-        # z = np.dot(np.transpose(self.params["w"]), np.transpose(self.inputs)) + self.params["b"]
-        # print('z = ', z)
-        # print('z_ shape: ', z.shape)
 
         ##Pour le linear layer (OK)
         print(self.params["w"])
@@ -64,8 +54,6 @@ class Linear(Layer):
         print(self.params["b"])
         z = np.dot(np.transpose(self.params["w"]), self.inputs) + self.params["b"]
         print('z = ', z)
-
-
         return z
 
     def backward(self, grad: Tensor) -> Tensor:
