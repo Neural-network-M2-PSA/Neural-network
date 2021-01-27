@@ -59,8 +59,9 @@ class Linear(Layer):
          self.grads["w"] = np.dot(grad, self.inputs)
          self.grads["b"] = b.grad(self.params["b"], grad)
          # Compute here the feed backward pass
-         res = [self.grads["w"], self.grads["b"]]
-         print("res : ", res)
+         res = np.dot(self.grads["w"],self.grads["b"])
+         #print("res : ", res)
+         #print("Backward effectué")
          return res
 
 class Activation(Layer):
@@ -111,6 +112,7 @@ def sigmoid_prime(x: Tensor) -> Tensor:
     res = Tensor
     #res =1-0.25*np.tanh(x/2)**2)
     return res
+
 
 
 class Sigmoid(Activation):

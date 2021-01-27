@@ -55,7 +55,7 @@ def test_linear_layer():
 
     layer_test = Linear(4,4)
     layer_test.forward(predicted)
-    #layer_test.backward(predicted)
+    layer_test.backward(predicted)
 
     return 0
 test_linear_layer()
