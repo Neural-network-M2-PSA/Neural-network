@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import ndarray as Tensor
-
+from Loss import MeanSquareError, Loss
 
 class Network:
     def __init__(self):
@@ -28,7 +28,7 @@ class Network:
             # forward propagation
             output = input_data[i]
             for layer in self.layers:
-                output = layer.forward_propagation(output)
+                output = layer.forward(output)
             result.append(output)
 
         return result
@@ -45,7 +45,7 @@ class Network:
                 # forward propagation
                 output = x_train[j]
                 for layer in self.layers:
-                    output = layer.forward_propagation(output)
+                    output = layer.forward(output)
 
                 # compute loss (for display purpose only)
                 err += self.loss(y_train[j], output)
@@ -53,7 +53,7 @@ class Network:
                 # backward propagation
                 error = self.loss_prime(y_train[j], output)
                 for layer in reversed(self.layers):
-                    error = layer.backward_propagation(error, learning_rate)
+                    error = layer.backward(error, learning_rate)
 
             # calculate average error on all samples
             err /= samples
