@@ -2,6 +2,8 @@ import numpy as np
 from numpy import ndarray as Tensor
 from Loss import MeanSquareError, Loss
 
+from math import *
+
 class Network:
     def __init__(self):
         self.layers = []
@@ -28,7 +30,7 @@ class Network:
             # forward propagation
             output = input_data[i]
             for layer in self.layers:
-                output = layer.forward(output)
+                output = round(layer.forward(output))
             result.append(output)
 
         return result
