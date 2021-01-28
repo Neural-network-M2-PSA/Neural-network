@@ -4,7 +4,7 @@ from Network import Network
 from Layer import Linear_layer, Activation_layer
 from ActivationFunctions import tanh, tanh_prime
 from Loss import Loss, MeanSquareError
-from Loss2 import loss, grad
+from Loss2 import loss, grad, mse, mse_prime
 
 # training data
 x_train = np.array([[[0,0]], [[0,1]], [[1,0]], [[1,1]]])
@@ -18,7 +18,7 @@ net.add(Linear_layer(3, 1))
 net.add(Activation_layer(tanh, tanh_prime))
 
 # train
-net.use(loss, grad)
+net.use(mse, mse_prime)
 net.fit(x_train, y_train, epochs=1000, learning_rate=0.1)
 
 # test
