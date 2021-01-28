@@ -1,9 +1,7 @@
 import numpy as np
-from typing import (Dict, Tuple, Callable,
-                    Sequence, Iterator, NamedTuple)
 from numpy import ndarray as Tensor
 
-Func = Callable[[Tensor], Tensor]
+
 
 class Layer:
     def __init__(self):
@@ -59,3 +57,4 @@ class Activation_layer(Layer):
     # learning_rate is not used because there is no "learnable" parameters.
     def backward(self, output_error, learning_rate):
         return self.activation_prime(self.input) * output_error
+
