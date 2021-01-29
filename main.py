@@ -30,14 +30,20 @@ net.fit(x_train, y_train, epochs=300, learning_rate=0.1)
 
 # test
 out = net.predict(x_train)
-print(out)
-print("Type d'entrée", type(x_train))
-print("Type de sortie", type(out))
-print("Type y_train", type(y_train))
+#print(out)
+#print("Type d'entrée", type(x_train))
+#print("Type de sortie", type(out))
+#print("Type y_train", type(y_train))
 
-print("shape d'entrée", x_train.shape)
+#print("shape d'entrée", x_train.shape)
 print("shape de sortie", out.shape)
 print("shape y_train", y_train.shape)
+
+for i in range(301):
+    print("Prédiction: ", out[i][0])
+    print("Valeur réelle: ", y_train[i][0])
+    print("____________________________________________________")
+
 
 #print(y_train)
 

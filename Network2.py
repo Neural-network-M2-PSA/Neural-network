@@ -30,9 +30,9 @@ class Network:
             for layer in self.layers:
                 output = layer.forward(output)
             result.append(output)
-        #np.reshape(result,(size+1, 1))
+        
         result = np.asarray(result)
-        #result.reshape(size+1, -2)
+
 
         result2 = result.ravel()
         result2 = result2[:, np.newaxis]
