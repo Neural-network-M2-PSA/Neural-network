@@ -26,14 +26,23 @@ class Network:
         result = []
 
         # run network over all samples
+        size = 0
         for i in range(samples):
             # forward propagation
             output = input_data[i]
+            size = i
             for layer in self.layers:
                 output = layer.forward(output)
             result.append(output)
+        #np.reshape(result,(size+1, 1))
+        result = np.asarray(result)
+        #result.reshape(size+1, -2)
 
-        return result
+        result2 = result.ravel()
+        result2 = result2[:, np.newaxis]
+
+
+        return result2
 
     # train the network
     def fit(self, x_train, y_train, epochs, learning_rate):
