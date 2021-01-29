@@ -2,9 +2,8 @@ import numpy as np
 
 from Network2 import Network
 from Layer import Linear_layer, Activation_layer
-from ActivationFunctions import tanh, tanh_prime, relu, relu_prime
-from Loss import Loss, MeanSquareError
-from Loss2 import loss, grad, mse, mse_prime
+from ActivationFunctions import *
+from Loss2 import mse, mse_prime
 
 
 import pandas as pd

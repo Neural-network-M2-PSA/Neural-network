@@ -1,8 +1,4 @@
 import numpy as np
-from numpy import ndarray as Tensor
-from Loss import MeanSquareError, Loss
-
-from math import *
 
 class Network:
     def __init__(self):
