@@ -33,7 +33,7 @@ class Linear_layer(Layer):
     # computes dE/dW, dE/dB for a given output_error=dE/dY. Returns input_error=dE/dX.
     def backward(self, output_error, learning_rate) -> Tensor:
         input_error = np.dot(output_error, self.weights.T)
-        weights_error = np.dot(self.input.T, output_error.T)
+        weights_error = np.dot(self.input.T, output_error)
         # dBias = output_error
 
         # update parameters
