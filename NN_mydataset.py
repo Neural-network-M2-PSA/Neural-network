@@ -1,5 +1,5 @@
 from Network2 import Network
-from Layer import Linear_layer, Activation_layer
+from layer2 import Linear_layer, Activation_layer
 from ActivationFunctions import *
 from Loss2 import mse, mse_prime
 
@@ -39,17 +39,25 @@ out = net.predict(x_train)
 print("shape de sortie", out.shape)
 print("shape y_train", y_train.shape)
 
-for i in range(301):
-    print("Prédiction: ", out[i][0])
+out2 = net.predict(x_train)
+#for i in range(301):
+    #out2[0][i] = round(out[0][i])
+
+
+
+
+
+
+for i in range(100):
+    print("____________________________________________________")
+    print("step: ", i)
+    print("Prédiction: ", round(out[i][0]))
     print("Valeur réelle: ", y_train[i][0])
     print("____________________________________________________")
 
 
 #print(y_train)
 
-out2 = net.predict(x_train)
-for i in range(0,4):
-    out2[i][0][0] = round(out[i][0][0])
 
-print(out2)
+
 
