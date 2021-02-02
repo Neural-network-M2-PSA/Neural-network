@@ -47,5 +47,9 @@ for i in range(301):
 
 #print(y_train)
 
+out2 = net.predict(x_train)
+for i in range(0,4):
+    out2[i][0][0] = round(out[i][0][0])
 
+print(out2)
 
