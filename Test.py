@@ -47,11 +47,30 @@ def test_train_prediction() :
     input = np.array([[1,2,3],[4,5,6]])
     target = np.array([[0.5,0.2],[0.1,0.3]])
     
-    train(my_NN, input, target, batch_size = 1,size_training=2)
+    lib2.train(my_NN, input, target, batch_size = 1,size_training=2)
     #attention il faut que size_training <= à nbre de ligne dans data
     
     input_predict = np.array([[1,1,4],[0.5,2,4]])
-    print(prediction(my_NN,input_predict))
+    print(lib2.prediction(my_NN,input_predict))
+    ''' OK '''
+
+
+def test_XOR() :
+    my_layer1 = lib2.Linear(2,3)
+    my_layer2 = lib2.Tanh()
+    my_layer3 = lib2.Linear(3,1)
+    my_layer4 = lib2.Sigmoid()
+    #my_layer3 = lib2.Arondi()
+    my_NN = lib2.NeuralNet([my_layer1,my_layer2,my_layer3,my_layer4])
+    
+    input =np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
+    target = np.array([[0], [1], [1], [0]])
+    
+    lib2.train(my_NN, input, target, batch_size = 1,size_training=4,num_epochs= 10000)
+    #attention il faut que size_training <= à nbre de ligne dans data
+    
+    input_predict = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
+    print(lib2.prediction(my_NN,input_predict))
     ''' OK '''
     
     
