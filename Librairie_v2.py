@@ -1,4 +1,9 @@
 """ Librairie V2"""
+'''
+supression classe batch iterator
+calcul en batch dans la fct train
+ajout fct activation relu et round mais posent pb 
+'''
 
 import numpy as np
 from numpy import ndarray as Tensor
@@ -53,7 +58,7 @@ class Linear(Layer): #peut-etre autre chose que lineaire ?
         super().__init__() #a quoi ca sert ?
         '''Initialize the weights and bias with random values'''
         self.W = np.random.randn(input_size, output_size)
-        self.b = np.random.randn(output_size,1)
+        self.b = np.zeros((output_size,1))
 
 
 
@@ -131,6 +136,34 @@ class Sigmoid(Activation):
         super().__init__(sigmoid, sigmoid_prime)
 
 
+'''Fct d'activation test : '''
+def arondi(x: Tensor) -> Tensor:
+    return np.round(x)
+
+def arondi_prime(x: Tensor) -> Tensor:
+    return 1 #ce n'est pas la dériver de round, juste pour tester
+
+class Arondi(Activation):
+    def __init__(self):
+        super().__init__(arondi, arondi_prime)
+
+
+
+def relu(x: Tensor) -> Tensor:
+    x[x<0]=0
+    return x
+
+def relu_prime(x: Tensor) -> Tensor:
+    x[x<0]=0
+    x[x>0]=1
+    return x
+
+class Relu(Activation):
+    def __init__(self):
+        super().__init__(relu, relu_prime)
+
+
+
 ##
 
 class NeuralNet:
@@ -165,6 +198,7 @@ class Optimizer:
     def step(self, net: NeuralNet) -> None:
         raise NotImplementedError
 
+
 class SGD(Optimizer):
     def __init__(self) -> None:
         super().__init__()
@@ -177,34 +211,6 @@ class SGD(Optimizer):
                 layer.b -= self.lr * layer.grad_b
 
 
-
-##
-'''
-Batch = NamedTuple("Batch", [("inputs", Tensor), ("targets", Tensor)])
-
-
-class DataIterator:
-    def __call__(self, inputs: Tensor, targets: Tensor) -> Iterator[Batch]:
-        raise NotImplementedError
-
-        
-class BatchIterator(DataIterator):
-    def __init__(self, batch_size: int = 32, shuffle: bool = True) -> None:
-        self.batch_size = batch_size
-        self.shuffle = shuffle
-
-    def __call__(self, inputs: Tensor, targets: Tensor) -> Iterator[Batch]:
-        starts = np.arange(0, len(inputs), self.batch_size)
-        if self.shuffle:
-            np.random.shuffle(starts)
-
-        for start in starts:
-            end = start + self.batch_size
-            batch_inputs = inputs[start:end]
-            batch_targets = targets[start:end]
-            yield Batch(batch_inputs, batch_targets)
-
-'''
 
 ##
 
@@ -220,11 +226,11 @@ def train(net: NeuralNet, inputs: Tensor, targets: Tensor,loss: Loss = MeanSquar
             # 1) feed forward
             y_actual = net.forward(inputs[i:i+batch_size])
             
-            #2) compute the loss and the gradients
+            # 2) compute the loss and the gradients
             epoch_loss += loss.loss(targets[i:i+batch_size],y_actual)
             grad_ini = loss.grad(targets[i:i+batch_size],y_actual)
             
-            #3)feed backwards
+            # 3)feed backwards
             '''grad_fini n'est pas utile mais dans net.backward() 
             il y a evolution des grad_w et grad_b de chaque layer 
             que l'on utilise ensuite dans l'optimisation  '''
@@ -236,7 +242,7 @@ def train(net: NeuralNet, inputs: Tensor, targets: Tensor,loss: Loss = MeanSquar
         
         epoch_loss = epoch_loss/n #moyenne sur batch
         # Print status every 50 iterations
-        if epoch % 50 == 0:
+        if epoch % 500 == 0:
             print(epoch, epoch_loss)
 
 
