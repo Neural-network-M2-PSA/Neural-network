@@ -11,20 +11,30 @@ from numpy import ndarray as Tensor
 from typing import (Dict, Tuple, Callable, Sequence, Iterator, NamedTuple)
 Func = Callable[[Tensor], Tensor] #definition du type de fct qu'on utilise a un moment -> a simplifier
 
+import matplotlib.pyplot as plt
+
+## Vrac
+
+def error_round(y_prediction, y_actual):
+    ''' pourcentage de réponse juste à 0.4 pres 
+    '''
+    diff = y_prediction - y_actual
+    diff_true = diff[np.abs(diff) <= 0.4 ]
+    return 100 - diff_true.size*100/diff.size
+
 
 ## Classe Loss
 class Loss:
 
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
-        raise NotImplementedError #ca veut dire quoi ca ?
+        raise NotImplementedError
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
         raise NotImplementedError
     
 
-class MeanSquareError(Loss): #heritage
+class MeanSquareError(Loss):
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
-        #ce sont des tensor, on peut utiliser les proprietes de numpy.ndarray
         return np.mean((predicted-actual)**2)
     
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
@@ -41,12 +51,9 @@ class Layer:
     def backward(self, grad: Tensor) -> Tensor:
         raise NotImplementedError
     
-    def type(self)-> str:
-        raise NotImplementedError
 
 
-
-class Linear(Layer): #peut-etre autre chose que lineaire ?
+class Linear(Layer):
     """
     Inputs are of size (batch_size, input_size) 
     Outputs are of size (batch_size, output_size)
@@ -55,10 +62,11 @@ class Linear(Layer): #peut-etre autre chose que lineaire ?
 
     def __init__(self, input_size: int, output_size: int) -> None:
         '''Inherit from base class Layer'''
-        super().__init__() #a quoi ca sert ?
+        super().__init__()
         '''Initialize the weights and bias with random values'''
         self.W = np.random.randn(input_size, output_size)
         self.b = np.zeros((output_size,1))
+        self.type = 'linear'
 
 
 
@@ -68,20 +76,17 @@ class Linear(Layer): #peut-etre autre chose que lineaire ?
         """
         self.inputs = inputs
         batch_size = self.inputs.shape[0]
-        return np.dot(self.inputs,self.W) + np.dot(np.array([np.ones(batch_size)]).T,self.b.T) #AV formule
+        return np.dot(self.inputs,self.W) + np.dot(np.array([np.ones(batch_size)]).T,self.b.T)
 
 
-    def backward(self, grad: Tensor) -> Tensor:  #a completer
+    def backward(self, grad: Tensor) -> Tensor:
         """
         grad shape is (batch_size, output_size)
         """
-        # Compute here the gradient parameters for the layer
         self.grad_w = np.dot(self.inputs.T,grad)
         self.grad_b = np.matrix(grad.mean(axis=0)).T
         return np.dot(grad, self.W.T)
 
-    def type(self)-> str:
-        return 'linear'
 
 
 class Activation(Layer):
@@ -89,10 +94,11 @@ class Activation(Layer):
     An activation layer just applies a function
     elementwise to its inputs
     """
-    def __init__(self, f: Func, f_prime: Func) -> None: #Func -> type des fct
+    def __init__(self, f: Func, f_prime: Func) -> None:
         super().__init__()
         self.f = f
         self.f_prime = f_prime
+        self.type = 'activation'
 
     def forward(self, inputs: Tensor) -> Tensor:
         self.inputs = inputs
@@ -105,18 +111,13 @@ class Activation(Layer):
         """
         return self.f_prime(self.inputs) * grad
 
-    def type(self)-> str:
-        return 'activation'
-
 
 
 def tanh(x: Tensor) -> Tensor:
-    # Write here the tanh function
     return np.tanh(x)
 
 def tanh_prime(x: Tensor) -> Tensor:
-    # Write here the derivative of the tanh
-    return 1-(tanh(x))**2 #utilisation fct ci dessus 
+    return 1-(tanh(x))**2
 
 class Tanh(Activation):
     def __init__(self):
@@ -124,43 +125,14 @@ class Tanh(Activation):
 
 
 def sigmoid(x: Tensor) -> Tensor:
-    # Write here the sigmoid function
     return 1/(1+np.exp(x))
 
 def sigmoid_prime(x: Tensor) -> Tensor:
-    # Write here the derivative of the sigmoid
     return sigmoid(x)*(1-sigmoid(x))
 
 class Sigmoid(Activation):
     def __init__(self):
         super().__init__(sigmoid, sigmoid_prime)
-
-
-'''Fct d'activation test : '''
-def arondi(x: Tensor) -> Tensor:
-    return np.round(x)
-
-def arondi_prime(x: Tensor) -> Tensor:
-    return 1 #ce n'est pas la dériver de round, juste pour tester
-
-class Arondi(Activation):
-    def __init__(self):
-        super().__init__(arondi, arondi_prime)
-
-
-
-def relu(x: Tensor) -> Tensor:
-    x[x<0]=0
-    return x
-
-def relu_prime(x: Tensor) -> Tensor:
-    x[x<0]=0
-    x[x>0]=1
-    return x
-
-class Relu(Activation):
-    def __init__(self):
-        super().__init__(relu, relu_prime)
 
 
 
@@ -197,6 +169,9 @@ class Optimizer:
         
     def step(self, net: NeuralNet) -> None:
         raise NotImplementedError
+    
+    def moyenne(self, net: NeuralNet, nbr_batch : int) -> None:
+        raise NotImplementedError
 
 
 class SGD(Optimizer):
@@ -206,28 +181,29 @@ class SGD(Optimizer):
 
     def step(self, net: NeuralNet) -> None:
         for layer in net.layers :
-            if layer.type() == 'linear':
+            if layer.type == 'linear':
                 layer.W -= self.lr * layer.grad_w
                 layer.b -= self.lr * layer.grad_b
 
 
-
 ##
 
-def train(net: NeuralNet, inputs: Tensor, targets: Tensor,loss: Loss = MeanSquareError(), optimizer: Optimizer = SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> None:
-    
+def train(net: NeuralNet, inputs: Tensor, targets: Tensor,loss: Loss = MeanSquareError(), optimizer: Optimizer = SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> list:
+    chi2_list = [] ; round_error_list=[]
     for epoch in range(num_epochs):
-        epoch_loss = 0.0
-        n=0
+        chi2_loss = 0.0
+        round_error_loss = 0.0
+        nbr_batch=0
         
         for i in range(0,size_training,batch_size):
-            n+=1
+            nbr_batch+=1
             
             # 1) feed forward
             y_actual = net.forward(inputs[i:i+batch_size])
             
             # 2) compute the loss and the gradients
-            epoch_loss += loss.loss(targets[i:i+batch_size],y_actual)
+            chi2_loss += loss.loss(targets[i:i+batch_size],y_actual)
+            round_error_loss += error_round(targets[i:i+batch_size],y_actual)
             grad_ini = loss.grad(targets[i:i+batch_size],y_actual)
             
             # 3)feed backwards
@@ -240,18 +216,27 @@ def train(net: NeuralNet, inputs: Tensor, targets: Tensor,loss: Loss = MeanSquar
             optimizer.lr = lr
             optimizer.step(net) #pb esthetique lr attribut de SGD(Optimizer)
         
-        epoch_loss = epoch_loss/n #moyenne sur batch
+        chi2_loss = chi2_loss/nbr_batch
+        round_error_loss = round_error_loss/nbr_batch
+        chi2_list.append(chi2_loss) 
+        round_error_list.append(round_error_loss) 
+        
         # Print status every 50 iterations
-        if epoch % 500 == 0:
-            print(epoch, epoch_loss)
+        if epoch % 50 == 0:
+            print("\r"+'epoch : '+str(epoch)+"/"+str(num_epochs)+", training chi2 error : "+str(chi2_loss)+"\r", end="")
+    print('epoch : '+str(epoch)+"/"+str(num_epochs)+", training final chi2 error : "+str(chi2_loss)+'\n')
+    
+    return chi2_list, round_error_list
 
 
 
 def prediction(net: NeuralNet, inputs: Tensor) -> None:
     return net.forward(inputs)
+
+
+
+
     
-
-
 
 
 
