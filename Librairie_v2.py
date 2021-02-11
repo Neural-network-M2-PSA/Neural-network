@@ -22,6 +22,10 @@ def error_round(y_prediction, y_actual):
     diff_true = diff[np.abs(diff) <= 0.4 ]
     return 100 - diff_true.size*100/diff.size
 
+def gauss(x,mu=0.25,sigma=0.05):
+    return 1/(sigma* np.sqrt(2*np.pi)) * np.exp(-((x-mu)**2)/(2*sigma**2))
+    
+
 
 ## Classe Loss
 class Loss:
@@ -39,6 +43,20 @@ class MeanSquareError(Loss):
     
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
         return 2*(predicted-actual)/predicted.shape[0]
+
+
+class ModifiedMeanSquareError(Loss):
+    ''' Classe modifiée pour penaliser le minimum local pour l'erreur à 0.25 ( prediction 0.5) à l'aide d'une gaussienne centree en 0.25
+'''
+    def loss(self, predicted: Tensor, actual: Tensor) -> float:
+        return np.mean(1+gauss((predicted-actual)**2))
+    
+    def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
+        MSE = (predicted-actual)**2
+        MSE_prime = 2*(predicted-actual)/predicted.shape[0]
+        return MSE_prime * (1 + gauss(MSE)*( 1 - MSE*(MSE - 0.25)/ 0.01**2 ))
+
+
 
 ## Classe Layer
 
@@ -223,7 +241,7 @@ def train(net: NeuralNet, inputs: Tensor, targets: Tensor,loss: Loss = MeanSquar
         
         # Print status every 50 iterations
         if epoch % 50 == 0:
-            print("\r"+'epoch : '+str(epoch)+"/"+str(num_epochs)+", training chi2 error : "+str(chi2_loss)+"\r", end="")
+            print('epoch : '+str(epoch)+"/"+str(num_epochs)+", training chi2 error : "+str(chi2_loss)+"\r", end="")
     print('epoch : '+str(epoch)+"/"+str(num_epochs)+", training final chi2 error : "+str(chi2_loss)+'\n')
     
     return chi2_list, round_error_list

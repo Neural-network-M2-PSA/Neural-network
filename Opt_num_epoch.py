@@ -20,14 +20,16 @@ plt.close()
 ## Parameters' choice
 
 '''Construction of the neural network '''
-my_layer1 = lib2.Linear(6,3)
+my_layer1 = lib2.Linear(6,4)
 my_layer2 = lib2.Tanh()
-my_layer3 = lib2.Linear(3,1)
+my_layer5 = lib2.Linear(4,2)
+my_layer6 = lib2.Tanh()
+my_layer3 = lib2.Linear(2,1)
 my_layer4 = lib2.Sigmoid()
-my_NN = lib2.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4])
+my_NN = lib2.NeuralNet([my_layer1, my_layer2, my_layer5, my_layer6, my_layer3, my_layer4])
 
 '''Maximal number of epochs '''
-Nmax = 5000
+Nmax = 50000
 
 '''size of the training set and the testing set '''
 train_size = 3000
@@ -37,7 +39,7 @@ test_size = 1500
 my_batch_size=100
 
 ''' learning rate'''
-my_lr=0.001
+my_lr=0.0005
 
 '''importation of the training and testing data'''
 Data_train = pd.read_csv('data_train.csv')

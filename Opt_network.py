@@ -19,9 +19,18 @@ import random as rd
 rd.seed(1)
 
 ## Parameters' choice
+'''Maximal number of epochs '''
+num_epoch_max = 2000
+
 '''size of the training set and the testing set '''
 train_size = 3000
 test_size = 1500
+
+'''size of the batch'''
+my_batch_size=100
+
+''' learning rate'''
+my_lr=0.001
 
 '''importation of the training and testing data'''
 Data_train = pd.read_csv('data_train.csv')
@@ -38,7 +47,6 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 
 def test_nbr_neuron(list_test):
-    num_epoch_max = 500
     color_list=['r','g','b','k','m','c','y']
     color_list *= 3
     k=0
@@ -50,64 +58,52 @@ def test_nbr_neuron(list_test):
         my_NN = lib2.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4])
         
         
-        chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target, size_training= train_size, num_epochs = num_epoch_max, lr=0.001, batch_size=100)
+        chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target, size_training= train_size, num_epochs = num_epoch_max, lr=my_lr, batch_size=my_batch_size)
         
         data_test_prediction = lib2.prediction(my_NN,data_test_input)
         error_final = lib2.error_round(data_test_prediction, data_test_target)
-        
-        plt.subplot(1,2,1)
-        plt.plot(range(num_epoch_max), chi2_list, label= str(i)+' neurons', c=color_list[k])
-        plt.xlabel('epoch')
-        plt.ylabel('training chi2')
-        plt.legend()
-        
-        plt.subplot(1,2,2)
-        plt.plot(range(num_epoch_max), error_list, label= str(i)+' neurons', c=color_list[k])
+
+        plt.plot(range(num_epoch_max), error_list, label= str(i), c=color_list[k])
         plt.plot([num_epoch_max],[error_final], marker='o', c=color_list[k])
         plt.xlabel('epoch')
         plt.ylabel('training round error')
         
         k+=1
-        
+    plt.legend(title='neurons')
     plt.show()
 
 
 
 def test_nbr_layer(list_test, n_neuron):
-    num_epoch_max = 2000
     color_list=['r','g','b','k','m','c','y']
     color_list *= 3
     k=0
     
-    my_layer1 = lib2.Linear(6,n_neuron)
-    my_layer2 = lib2.Tanh()
-    my_layer3 = lib2.Linear(n_neuron,n_neuron)
-    my_layer4 = lib2.Linear(n_neuron,1)
-    my_layer5 = lib2.Sigmoid()
+    my_layerini1 = lib2.Linear(6,n_neuron)
+    my_layerini2 = lib2.Tanh()
+    my_layerfini1 = lib2.Linear(n_neuron,1)
+    my_layerfini2 = lib2.Sigmoid()
         
     for i in list_test :
-        layers_new = [my_layer1, my_layer2] + [my_layer3, my_layer2] * i + [my_layer4, my_layer5]
+        layers_new = [my_layerini1, my_layerini2]
+        for j in range(i) :
+            layers_new += [lib2.Linear(n_neuron,n_neuron),lib2.Tanh()]
+        layers_new += [my_layerfini1, my_layerfini2]
         my_NN = lib2.NeuralNet(layers_new)
         
         
-        chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target, size_training= train_size, num_epochs = num_epoch_max, lr=0.001, batch_size=100)
+        chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target, size_training= train_size, num_epochs = num_epoch_max, lr=my_lr, batch_size=my_batch_size)
         data_test_prediction = lib2.prediction(my_NN,data_test_input)
         
         error_final = lib2.error_round(data_test_prediction, data_test_target)
         
-        plt.subplot(1,2,1)
-        plt.plot(range(num_epoch_max), chi2_list, label= str(i)+' hidden layer',c=color_list[k])
-        plt.xlabel('epoch')
-        plt.ylabel('chi2')
-        plt.legend()
-        
-        plt.subplot(1,2,2)
-        plt.plot(range(num_epoch_max), error_list, label= str(i)+' hidden layer',c=color_list[k])
+        plt.plot(range(num_epoch_max), error_list, label= str(i),c=color_list[k])
         plt.plot([num_epoch_max],[error_final], marker='o', c=color_list[k])
         plt.xlabel('epoch')
         plt.ylabel('round error')
         
         k+=1
+    plt.legend(title='hidden layers')
     plt.show()
 
 
