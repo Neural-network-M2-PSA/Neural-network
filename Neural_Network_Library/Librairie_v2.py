@@ -9,22 +9,9 @@ import numpy as np
 from numpy import ndarray as Tensor
 
 from typing import (Dict, Tuple, Callable, Sequence, Iterator, NamedTuple)
-Func = Callable[[Tensor], Tensor] #definition du type de fct qu'on utilise a un moment -> a simplifier
+#Func = Callable[[Tensor], Tensor] #definition du type de fct qu'on utilise a un moment -> a simplifier
 
 import matplotlib.pyplot as plt
-
-## Vrac
-
-def error_round(y_prediction, y_actual):
-    ''' pourcentage de réponse juste à 0.4 pres 
-    '''
-    diff = y_prediction - y_actual
-    diff_true = diff[np.abs(diff) <= 0.4 ]
-    return 100 - diff_true.size*100/diff.size
-
-def gauss(x,mu=0.25,sigma=0.05):
-    return 1/(sigma* np.sqrt(2*np.pi)) * np.exp(-((x-mu)**2)/(2*sigma**2))
-    
 
 
 ## Classe Loss
@@ -112,7 +99,7 @@ class Activation(Layer):
     An activation layer just applies a function
     elementwise to its inputs
     """
-    def __init__(self, f: Func, f_prime: Func) -> None:
+    def __init__(self, f, f_prime) -> None:
         super().__init__()
         self.f = f
         self.f_prime = f_prime
