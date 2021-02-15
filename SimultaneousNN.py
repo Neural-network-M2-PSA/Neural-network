@@ -6,7 +6,9 @@
 
 
 ## importations
-import Librairie_v2 as lib2
+
+import Neural_Network_Library.Librairie_v2 as lib2
+#import Librairie_v2 as lib2
 import numpy as np
 from numpy import ndarray as Tensor
 import pandas as pd
