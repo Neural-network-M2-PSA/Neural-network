@@ -16,8 +16,10 @@ import matplotlib.pyplot as plt
 
 plt.close()
 
-import random as rd
-rd.seed(1)
+#import random as rd
+#rd.seed(1)
+
+np.random.seed(1)
 
 ## Parameters' choice
 '''Maximal number of epochs '''

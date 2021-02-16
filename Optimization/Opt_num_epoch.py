@@ -10,6 +10,13 @@ Two functions to use :
 
 ## importations
 import Neural_Network_Library.Librairie_v2 as lib2
+import Neural_Network_Library.loss as Loss
+import Neural_Network_Library.layer as Layer
+import Neural_Network_Library.error_round as Error_round
+import Neural_Network_Library.activation_functions as ActivationFunctions
+import Neural_Network_Library.neural_network as Neural_network
+import Neural_Network_Library.optimizer as OptimizerClass
+
 
 #import Librairie_v2 as lib2
 import numpy as np
@@ -22,13 +29,13 @@ plt.close()
 ## Parameters' choice
 
 '''Construction of the neural network '''
-my_layer1 = lib2.Linear(6,4)
-my_layer2 = lib2.Tanh()
-my_layer5 = lib2.Linear(4,2)
-my_layer6 = lib2.Tanh()
-my_layer3 = lib2.Linear(2,1)
-my_layer4 = lib2.Sigmoid()
-my_NN = lib2.NeuralNet([my_layer1, my_layer2, my_layer5, my_layer6, my_layer3, my_layer4])
+my_layer1 = Layer.Linear(6,4)
+my_layer2 = ActivationFunctions.Tanh()
+my_layer5 = Layer.Linear(4,2)
+my_layer6 = ActivationFunctions.Tanh()
+my_layer3 = Layer.Linear(2,1)
+my_layer4 = ActivationFunctions.Sigmoid()
+my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer5, my_layer6, my_layer3, my_layer4])
 
 '''Maximal number of epochs '''
 Nmax = 50000
@@ -57,7 +64,7 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 ## Modified function
 
-def train_prediction(net: lib2.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: lib2.Loss = lib2.MeanSquareError(), optimizer: lib2.Optimizer = lib2.SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> None:
+def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: lib2.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> None:
     '''
     This return function returns in a DataFrame the chi2 et our special round error of the training and testing set according to the number of epoch.
     This DataFrame is also save as a csv file.
@@ -86,14 +93,14 @@ def train_prediction(net: lib2.NeuralNet, inputs_train: Tensor, targets_train: T
             optimizer.lr = lr
             optimizer.step(net)
             
-            error_round_train += lib2.error_round(targets_train[i:i+batch_size], y_actual)
+            error_round_train += Error_round.error_round(targets_train[i:i+batch_size], y_actual)
         
         Chi2_train = Chi2_train/nbr_batch
         error_round_train = error_round_train /nbr_batch
         
         y_actual_test = net.forward(inputs_test)
         Chi2_test = loss.loss(targets_test, y_actual_test)
-        error_round_test = lib2.error_round(targets_test, y_actual_test)
+        error_round_test = Error_round.error_round(targets_test, y_actual_test)
 
         
         if epoch % 100 == 0:

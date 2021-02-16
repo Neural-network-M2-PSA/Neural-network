@@ -6,22 +6,31 @@ Basic use of the neural network algorithm
 
 ## importation
 
+import Neural_Network_Library.layer as Layer
 import Neural_Network_Library.Librairie_v2 as lib2
+import Neural_Network_Library.activation_functions as ActivationFunctions
+import Neural_Network_Library.neural_network as Neural_network
+import Neural_Network_Library.user as User
 
 import Optimization.Opt_network
 import Optimization.Opt_num_epoch
 
 import Function_Tests.Test
 
-#import Librairie_v2 as lib2
+
+
 import numpy as np
 import pandas as pd
 
 import matplotlib.pyplot as plt
 plt.close()
 
-import random as rd
-rd.seed(1)
+#import random as rd
+#rd.seed(1)
+'''
+Seed
+'''
+np.random.seed(1)
 
 ##Parameters' choice
 
@@ -39,17 +48,17 @@ my_batch_size=100
 my_lr=0.001
 
 '''Construction of the neural network '''
-my_layer1 = lib2.Linear(6,5)
-my_layer2 = lib2.Tanh()
-my_layer3 = lib2.Linear(5,4)
-my_layer4 = lib2.Tanh()
-my_layer5 = lib2.Linear(4,3)
-my_layer6 = lib2.Tanh()
-my_layer7 = lib2.Linear(3,2)
-my_layer8 = lib2.Tanh()
-my_layer9 = lib2.Linear(2,1)
-my_layer10 = lib2.Sigmoid()
-my_NN = lib2.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my_layer5, my_layer6, my_layer7, my_layer8, my_layer9, my_layer10])
+my_layer1 = Layer.Linear(6,5)
+my_layer2 = ActivationFunctions.Tanh()
+my_layer3 = Layer.Linear(5,4)
+my_layer4 = ActivationFunctions.Tanh()
+my_layer5 = Layer.Linear(4,3)
+my_layer6 = ActivationFunctions.Tanh()
+my_layer7 = Layer.Linear(3,2)
+my_layer8 = ActivationFunctions.Tanh()
+my_layer9 = Layer.Linear(2,1)
+my_layer10 = ActivationFunctions.Sigmoid()
+my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my_layer5, my_layer6, my_layer7, my_layer8, my_layer9, my_layer10])
 
 
 
@@ -73,7 +82,7 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 ## training
 
 '''training'''
-chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target , size_training=train_size, num_epochs = my_num_epochs, lr=my_lr, batch_size=my_batch_size)
+chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target , size_training=train_size, num_epochs = my_num_epochs, lr=my_lr, batch_size=my_batch_size)
 
 
 
@@ -85,7 +94,7 @@ plt.show()
 
 ## testing
 
-data_test_prediction = lib2.prediction(my_NN,data_test_input)
+data_test_prediction = User.prediction(my_NN,data_test_input)
 
 '''comparison between the predictions and the true results '''
 results = pd.DataFrame()
