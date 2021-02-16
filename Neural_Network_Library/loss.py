@@ -22,7 +22,7 @@ In the class ModifiedMeanSquareError, we modified the class MeanSquareError to..
 '''
 
 
-#Libraries
+# Libraries
 import numpy as np
 from numpy import ndarray as Tensor
 

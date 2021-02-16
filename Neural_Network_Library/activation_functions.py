@@ -16,7 +16,7 @@ Basic activation functions of a neural network:
 -Relu
 '''
 
-#Libraries
+# Libraries
 import numpy as np
 from numpy import ndarray as Tensor
 

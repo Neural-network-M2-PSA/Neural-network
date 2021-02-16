@@ -24,7 +24,7 @@ the outputs using the function forward.
 
 '''
 
-#Library
+# Library
 from numpy import ndarray as Tensor
 
 

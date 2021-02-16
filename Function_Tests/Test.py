@@ -1,9 +1,30 @@
+"""
+M2-PSA project
+2020-2021
+BROUILLARD Alizée, alizeebrouillard020198@gmail.com
+BRUANT Quentin, quentinbruant92@gmail.com
+GODINAUD Leila, leila.godinaud@gmail.com
+
+"""
+
+"""_______Test_____"""
+'''
+This file contains the tests of the function MeanSquareError, for a linear layer, for a neural network (less complicated
+than ours), for the functions train and prediction. We have also a test for a XOR to make sure that our neural network
+learns something. 
+'''
+
+
+# Library
 import numpy as np
+
+# Imports
 import Neural_Network_Library.loss as Loss
 import Neural_Network_Library.layer as Layer
 import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.user as User
+
 
 def test_MeanSquareError() :
     predicted = np.array([[1, 1, 1, 1, 1, 1],[2,4,5,6,8,1]])
@@ -14,7 +35,6 @@ def test_MeanSquareError() :
     print('test mse.loss : ', mse.loss(predicted, actual))
     print('test mse.grad : ', mse.grad(predicted, actual))
     ''' OK '''
-    
     
 
 def test_LinearLayer() :
@@ -51,7 +71,7 @@ def test_train_prediction() :
     target = np.array([[0.5,0.2],[0.1,0.3]])
     
     User.train(my_NN, input, target, batch_size = 1,size_training=2)
-    #attention il faut que size_training <= à nbre de ligne dans data
+    #By careful, we must have size_training = number of rows in our data
     
     input_predict = np.array([[1,1,4],[0.5,2,4]])
     print(User.prediction(my_NN,input_predict))
@@ -70,7 +90,7 @@ def test_XOR() :
     target = np.array([[0], [1], [1], [0]])
     
     User.train(my_NN, input, target, batch_size = 1,size_training=4,num_epochs= 10000)
-    #attention il faut que size_training <= à nbre de ligne dans data
+    # By careful, we must have size_training = number of rows in our data
     
     input_predict = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
     print(User.prediction(my_NN,input_predict))

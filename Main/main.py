@@ -4,10 +4,10 @@
 Basic use of the neural network algorithm
 '''
 
-## importation
+# importation
 
 import Neural_Network_Library.layer as Layer
-import Neural_Network_Library.Librairie_v2 as lib2
+
 import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.user as User

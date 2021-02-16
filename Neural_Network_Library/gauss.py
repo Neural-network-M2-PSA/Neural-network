@@ -12,7 +12,7 @@ GODINAUD Leila, leila.godinaud@gmail.com
 This function return the  .....
 '''
 
-#Library
+# Library
 import numpy as np
 
 def gauss(x,mu=0.25,sigma=0.05):

@@ -15,7 +15,7 @@ SGD means Stochastic gradient descent.
 
 
 '''
-
+# Imports
 import Neural_Network_Library.neural_network as Neural_network
 
 class Optimizer:

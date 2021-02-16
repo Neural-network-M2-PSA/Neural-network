@@ -24,7 +24,7 @@ These two classes have different argument for self.type: 'linear' or 'activation
 '''
 
 
-#Libraries
+# Libraries
 import numpy as np
 from numpy import ndarray as Tensor
 

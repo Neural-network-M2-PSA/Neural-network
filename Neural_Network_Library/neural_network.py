@@ -15,7 +15,7 @@ In this class, the function forward takes the layers in order and the function b
 
 
 '''
-#Library
+# Library
 from numpy import ndarray as Tensor
 
 class NeuralNet:
