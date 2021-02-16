@@ -10,7 +10,7 @@ GODINAUD Leila, leila.godinaud@gmail.com
 """_______main_____"""
 
 '''
-Basic use of the neural network algorithm
+Basic use of the neural network algorithm.
 '''
 
 # Libraries
