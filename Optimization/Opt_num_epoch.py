@@ -1,29 +1,40 @@
-"""_______Optimisation of the hyper-parametres_____"""
+"""
+M2-PSA project
+2020-2021
+BROUILLARD Alizée, alizeebrouillard020198@gmail.com
+BRUANT Quentin, quentinbruant92@gmail.com
+GODINAUD Leila, leila.godinaud@gmail.com
+
+"""
+
+"""_______Opt_num_epoch_____"""
 
 '''
-Two functions to use :
--> Opt_nbr_epoch() returns a graph with the evolution of the error for the training and testing set
--> Opt_learning_rate(list_learning_rate) returns a graph in order to comparate the evolution of the training set's error according to various learning rate (given by the user in the list list_learning_rate.
+This file contains two functions:
+"Opt_nbr_epoch" returns a graph with the evolution of the error for the training and testing set. It also returns in a
+ DataFrame the chi2 et our special round error of the training and testing set according to the number of epoch.
+ This DataFrame is also save as a csv file.
+
+"Opt_learning_rate" returns a graph in order to compare the evolution of the training set's error according to various 
+learning rate (given by the user in the list list_learning_rate).
 
 '''
+# Libraries
+import numpy as np
+from numpy import ndarray as Tensor
+import pandas as pd
+import matplotlib.pyplot as plt
 
-
-## importations
-import Neural_Network_Library.Librairie_v2 as lib2
+# Imports
 import Neural_Network_Library.loss as Loss
 import Neural_Network_Library.layer as Layer
 import Neural_Network_Library.error_round as Error_round
 import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.optimizer as OptimizerClass
+import Neural_Network_Library.user as User
 
 
-#import Librairie_v2 as lib2
-import numpy as np
-from numpy import ndarray as Tensor
-import pandas as pd
-
-import matplotlib.pyplot as plt
 plt.close()
 
 ## Parameters' choice
@@ -62,14 +73,9 @@ data_test_input = np.array(Data_test[param][:test_size])
 data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 
-## Modified function
+# Modified function
 
-def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: lib2.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> None:
-    '''
-    This return function returns in a DataFrame the chi2 et our special round error of the training and testing set according to the number of epoch.
-    This DataFrame is also save as a csv file.
-    '''
-    
+def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> None:
     Data = pd.DataFrame(columns = ('Chi2_train', 'Chi2_test', 'error_round_train', 'error_round_test'))
     for epoch in range(num_epochs):
         Chi2_train = 0.0
@@ -116,7 +122,7 @@ def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, target
 
 
 
-## User's function
+# User's function
 
 
 def Opt_nbr_epoch() :
@@ -138,11 +144,8 @@ def Opt_nbr_epoch() :
 
 
 def Opt_learning_rate(list_learning_rate):
-    ''' 
-    Evolution of the traing error according to various learning rate of the list list_learning_rate.
-    '''
     for my_lr in list_learning_rate :
-        Data = lib2.train(my_NN, data_train_input, data_train_target, size_training=train_size, num_epochs = Nmax, lr=my_lr, batch_size = my_batch_size)[1]
+        Data = User.train(my_NN, data_train_input, data_train_target, size_training=train_size, num_epochs = Nmax, lr=my_lr, batch_size = my_batch_size)[1]
         plt.plot(range(Nmax), Data, label=str(my_lr))
     
     plt.xlabel('epoch')
