@@ -8,7 +8,7 @@ BRUANT Quentin, quentinbruant92@gmail.com
 GODINAUD Leila, leila.godinaud@gmail.com
 
 
-# Abstract
+## Abstract
 
 The goal of this project is to build from scratch a neural network using only numpy.
 After we test it, we develop few algorithm in order to optimize the hyper-parameters.
@@ -20,7 +20,7 @@ The data set we use, allowed to answer to an praticle problem of particle physic
 how to separate Signal from Noise on an observed event ?
 We also prepare these data set thanks to pre-processing algorithms.
 
-# Structure
+## Structure
 
 The structure of our project is the folowing, please go inside each file to have its extensive description.
 
@@ -53,7 +53,7 @@ contents :
   - Opt_num_epoch.py
 
 
-# User's advice
+## User's advice
 
 ### Standard use : write, train and predict with a Neural Network
 
