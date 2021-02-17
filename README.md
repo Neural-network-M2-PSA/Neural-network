@@ -25,7 +25,6 @@ We also prepare these data set thanks to pre-processing algorithms.
 The structure of our project is the folowing, please go inside each file to have its extensive description.
 
 file : Function_Tests
-
 contents :
   - Test.py
 
@@ -34,6 +33,7 @@ file : Main
 contents :
   - main.py
   - SimultaneousNN.py
+
 
 file : Neural_Network_Library
 
@@ -46,11 +46,46 @@ contents :
   - optimizer.py
   - user.py
 
+
 file : Optimization
 
 contents :
   - Opt_network.py
   - Opt_num_epoch.py
+
+
+
+
+- file : Function_Tests
+  contents :
+    - Test.py
+
+- file : Main
+  contents :
+    - main.py
+    - SimultaneousNN.py
+
+- file : Neural_Network_Library
+  contents : 
+    - activation_functions.py
+    - error_round.py
+    - layer.py
+    - loss.py
+    - neural_network.py
+    - optimizer.py
+    - user.py
+
+- file : Optimization
+  contents :
+    - Opt_network.py
+    - Opt_num_epoch.py
+
+
+
+
+
+
+
 
 
 ## User's advice
