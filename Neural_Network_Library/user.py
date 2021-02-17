@@ -10,16 +10,17 @@ GODINAUD Leila, leila.godinaud@gmail.com
 """_______user_____"""
 '''
 This file contains two functions: train and predict. 
-The function "train" trains the neural network. Its takes in arguments lots of elements: the network, the inputs, the
-function of loss and the optimizer. There are other paramaters which are defined by default but the user can modifie 
-them: the number of epochs, the size of the training, the learning rate lr and the batch size. This functions has 4 
-mains steps : 1) feed the forward, 2) compute the loss and the gradient, 3) feed the backward and 4) update the neural 
-network. 
+The function "train" trains the neural network. Its takes in arguments lots of elements: the network, the inputs, the target,
+the function of loss (default = MSE() ), the optimizer ( default : SGD(), alternative : DecaySGD()),
+the total number of epoch (default 500) and the batch_size (default : 100).
+
+This functions has 4 mains steps : 
+1) feed the forward, 2) compute the loss and the gradient, 3) feed the backward and 4) update the neural network. 
 Remarke: "grad_fini" isn't necessary here. But, there is an evolution of grad_w and grad_b of each layer in 
 net.backgrad(), which is useful later for the optimization. 
 
-The function "prediction" predicts takes in arguments the neural network and the input. Then, this function predict
-the outputs using the function forward.   
+The function "prediction" takes in arguments the neural network and the input. Then, this function predicts
+the outputs using the function forward. This function must be used after a training of a neural network.
 
 
 '''
@@ -36,10 +37,9 @@ import Neural_Network_Library.optimizer as OptimizerClass
 
 
 def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: Loss = Loss.MeanSquareError(),
-          optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, size_training: int = 100,
-          lr: float = 0.01, batch_size: int = 32) -> list:
-    chi2_list = [];
-    round_error_list = []
+          optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size: int = 32) -> list:
+    chi2_list = []; round_error_list = []
+    size_training = inputs.shape[0] 
     for epoch in range(num_epochs):
         chi2_loss = 0.0
         round_error_loss = 0.0
@@ -60,8 +60,7 @@ def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: 
             grad_fini = net.backward(grad_ini)
 
             # 4) Update the net
-            optimizer.lr = lr
-            optimizer.step(net)
+            optimizer.step(net, n_epoch = epoch)
 
         chi2_loss = chi2_loss / nbr_batch
         round_error_loss = round_error_loss / nbr_batch
@@ -70,7 +69,7 @@ def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: 
 
         # Print status every 50 iterations
         if epoch % 50 == 0:
-            print('epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training chi2 error : " + str(chi2_loss) + "\r",
+            print('\r epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training chi2 error : " + str(chi2_loss) + "\r",
                   end="")
     print('epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training final chi2 error : " + str(chi2_loss) + '\n')
 
