@@ -13,16 +13,18 @@ GODINAUD Leila, leila.godinaud@gmail.com
 Basic use of the neural network algorithm.
 '''
 
-# Libraries
+## Libraries
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# importation
+## importations
 import Neural_Network_Library.layer as Layer
 import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.user as User
+import Neural_Network_Library.optimizer as Optimizer
+import Neural_Network_Library.error_round as error_round2
 
 
 import Optimization.Opt_network
@@ -31,12 +33,10 @@ import Function_Tests.Test
 
 plt.close()
 
-'''
-Seed
-'''
-np.random.seed(1)
+## Parameters' choice
 
-# Parameters' choice
+'''Seed'''
+np.random.seed(1)
 
 '''size of the training set and the testing set '''
 train_size = 3000
@@ -50,6 +50,9 @@ my_batch_size=100
 
 ''' learning rate'''
 my_lr=0.001
+
+my_initial_lr = 0.1
+my_decay_coeff =1/200
 
 '''Construction of the neural network '''
 my_layer1 = Layer.Linear(6,5)
@@ -66,7 +69,7 @@ my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my
 
 
 
-# Importation of the training and testing data
+## Importation of the training and testing data
 data_training_path='Neural-network2/Data/data_train+.csv'
 data_test_path='Neural-network2/Data/data_test+.csv'
 
@@ -86,45 +89,83 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 
 
-# Training
+## Basic use : training and testing
+
+print('basic example of utilisation :')
 
 '''training'''
-chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target , size_training=train_size, num_epochs = my_num_epochs, lr=my_lr, batch_size=my_batch_size)
+chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target , num_epochs = my_num_epochs, optimizer = Optimizer.SGD(lr=my_lr), batch_size=my_batch_size)
 
-
-
-plt.plot(range(my_num_epochs), error_list)
+plt.plot(range(my_num_epochs), chi2_list)
 plt.xlabel('epoch')
-plt.ylabel('round error')
-plt.title('Evolution of the training error')
-plt.show()
+plt.ylabel('mean squared error')
+plt.title('Evolution of the training error : basic example')
 
-# Testing
-
+'''testing '''
 data_test_prediction = User.prediction(my_NN,data_test_input)
 
-'''comparison between the predictions and the true results '''
-results = pd.DataFrame()
-results['NN']=data_test_prediction.T[0]
-results['validation']=data_test_target
-print(results)
+error = error_round2.error_round(data_test_prediction, data_test_target)
+print('% false error for testing set : ', error)
+
+
+'''histogram of predictions'''
+plt.figure()
+S = data_test_prediction[data_test_target==1]
+B = data_test_prediction[data_test_target==0]
+
+kwargs = dict(histtype="stepfilled", alpha=0.5, bins=25)
+
+plt.hist(S, **kwargs, label ='Signal')
+plt.hist(B, **kwargs, label='Noise')
+plt.legend(loc="upper center")
+plt.xlabel('predictions for testing set')
+plt.ylabel('number of answer')
+plt.title('Basic use')
+
+
+## Alternative use : adaptative learning rate
+
+print('\nAlternative example of utilisation (adaptative learning rate) :')
+
+''' training'''
+
+chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target, num_epochs = my_num_epochs, batch_size=my_batch_size, optimizer = Optimizer.DecaySGD(initial_lr= my_initial_lr, decay_coeff= my_decay_coeff) )
+
+plt.figure()
+plt.plot(range(my_num_epochs), chi2_list)
+plt.xlabel('epoch')
+plt.ylabel('mean squared error')
+plt.title('Evolution of the training error : adaptative learning rate')
+
+plt.figure()
+x=np.array(range(my_num_epochs))
+plt.plot(x, my_initial_lr * np.exp(-my_decay_coeff *x))
+plt.xlabel('epoch')
+plt.ylabel('learning rate')
+plt.title('Adaptative learning rate')
+
+
+'''testing '''
+data_test_prediction = User.prediction(my_NN,data_test_input)
+
+error = error_round2.error_round(data_test_prediction, data_test_target)
+print('% false error for testing set : ', error)
+
+
+'''histogram of predictions and ROC curve '''
+plt.figure()
+S = data_test_prediction[data_test_target==1]
+B = data_test_prediction[data_test_target==0]
 
 
 
-print('% erreur avec arrondi prediction',error_list[-1])
+plt.hist(S, **kwargs, label ='Signal')
+plt.hist(B, **kwargs, label='Noise')
+plt.legend(loc="upper center")
+plt.xlabel('predictions for testing set')
+plt.ylabel('number of answer')
+plt.title('Alternative use')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print('\n')
+plt.show()
 
