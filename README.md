@@ -1,11 +1,14 @@
-M2-PSA project : Make your own neural network with Numpy
+# M2-PSA project : Make your own neural network with Numpy
 2020-2021
+
 BROUILLARD Alizée, alizeebrouillard020198@gmail.com
+
 BRUANT Quentin, quentinbruant92@gmail.com
+
 GODINAUD Leila, leila.godinaud@gmail.com
 
 
-## Abstract
+# Abstract
 
 The goal of this project is to build from scratch a neural network using only numpy.
 After we test it, we develop few algorithm in order to optimize the hyper-parameters.
@@ -17,20 +20,23 @@ The data set we use, allowed to answer to an praticle problem of particle physic
 how to separate Signal from Noise on an observed event ?
 We also prepare these data set thanks to pre-processing algorithms.
 
-## Structure
+# Structure
 
 The structure of our project is the folowing, please go inside each file to have its extensive description.
 
 file : Function_Tests
+
 contents :
   - Test.py
 
 file : Main
+
 contents :
   - main.py
   - SimultaneousNN.py
 
 file : Neural_Network_Library
+
 contents : 
   - activation_functions.py
   - error_round.py
@@ -41,35 +47,17 @@ contents :
   - user.py
 
 file : Optimization
+
 contents :
   - Opt_network.py
   - Opt_num_epoch.py
 
 
-## User's advice
+# User's advice
 
-# Standard use : write, train and predict with a Neural Network
+### Standard use : write, train and predict with a Neural Network
 
-# Optimization use
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Optimization use
 
 
 
