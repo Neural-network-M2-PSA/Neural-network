@@ -9,15 +9,12 @@ GODINAUD Leila, leila.godinaud@gmail.com
 
 """_______loss_____"""
 '''
-This file contains the class Loss, and the classes MeanSquareError and ModifiedMeanSquareError which inherit of the base
+This file contains the class Loss, and the classes MeanSquareError which inherits of the base
 class Loss. 
 
 In the class MeanSquareError, we compute the loss. For that, we measures the average of the squares of the errors, that 
 is, the average squared difference between the estimated values and the actual value. MSE is a risk function, 
 corresponding to the expected value of the squared error loss. We also compute the grad by derivation of the loss. 
-
-In the class ModifiedMeanSquareError, we modified the class MeanSquareError to.....
-
 
 '''
 
@@ -45,14 +42,3 @@ class MeanSquareError(Loss):
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
         return 2 * (predicted - actual) / predicted.shape[0]
-
-
-class ModifiedMeanSquareError(Loss):
-
-    def loss(self, predicted: Tensor, actual: Tensor) -> float:
-        return np.mean(1 + Gauss.gauss((predicted - actual) ** 2))
-
-    def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
-        MSE = (predicted - actual) ** 2
-        MSE_prime = 2 * (predicted - actual) / predicted.shape[0]
-        return MSE_prime * (1 + Gauss.gauss(MSE) * (1 - MSE * (MSE - 0.25) / 0.01 ** 2))
