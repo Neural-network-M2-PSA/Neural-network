@@ -93,7 +93,7 @@ def relu_prime(x: Tensor) -> Tensor:
         return 0
     if x>0:
         return 1
-    
+
 class Relu(Layer.Activation):
     def __init__(self):
         super().__init__(relu, relu_prime)

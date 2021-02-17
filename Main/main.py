@@ -23,7 +23,7 @@ import Neural_Network_Library.layer as Layer
 import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.user as User
-import Neural_Network_Library.Data
+
 
 import Optimization.Opt_network
 import Optimization.Opt_num_epoch
@@ -68,8 +68,8 @@ my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my
 
 # Importation of the training and testing data
 
-Data_train = pd.read_csv('data_train.csv')
-Data_test = pd.read_csv('data_test.csv')
+Data_train = pd.read_csv('D:\data_train.csv')
+Data_test = pd.read_csv('D:\data_test.csv')
 
 
 param = ['cosTBz', 'R2', 'chiProb', 'Ks_distChi', 'm_KSpipi_norm', 'Mbc_norm']
