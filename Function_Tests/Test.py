@@ -9,8 +9,8 @@ GODINAUD Leila, leila.godinaud@gmail.com
 
 """_______Test_____"""
 '''
-This file contains the tests of the function MeanSquareError, for a linear layer, for a neural network (less complicated
-than ours), for the functions train and prediction. We have also a test for a XOR to make sure that our neural network
+This file contains preliminary tests to verify the function MeanSquareError, the class linear layer, the class neural network, 
+the functions train and prediction. We have also a test for a XOR to make sure that our neural network
 learns something. 
 '''
 
