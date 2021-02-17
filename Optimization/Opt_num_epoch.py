@@ -12,7 +12,7 @@ GODINAUD Leila, leila.godinaud@gmail.com
 '''
 This file contains two functions:
 "Opt_nbr_epoch" returns a graph with the evolution of the error for the training and testing set. It also returns in a
- DataFrame the chi2 et our special round error of the training and testing set according to the number of epoch.
+ DataFrame the mean squared error et our round error of the training and testing set according to the number of epoch.
  This DataFrame is also save as a csv file.
 
 "Opt_learning_rate" returns a graph in order to compare the evolution of the training set's error according to various 
@@ -37,7 +37,10 @@ import Neural_Network_Library.user as User
 
 plt.close()
 
-## Parameters' choice
+# Parameters' choice
+
+'''seed '''
+np.random.seed(1)
 
 '''Construction of the neural network '''
 my_layer1 = Layer.Linear(6,4)
@@ -73,10 +76,11 @@ data_test_input = np.array(Data_test[param][:test_size])
 data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 
-# Modified function
+# Modified training function
 
-def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, size_training : int =100, lr : float = 0.01, batch_size : int = 32) -> None:
-    Data = pd.DataFrame(columns = ('Chi2_train', 'Chi2_test', 'error_round_train', 'error_round_test'))
+def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size : int = 32) -> None:
+    Data = pd.DataFrame(columns = ('MSE_train', 'MSE_test', 'error_round_train', 'error_round_test'))
+    size_training = inputs_train.shape[0]
     for epoch in range(num_epochs):
         Chi2_train = 0.0
         error_round_train = 0.0
@@ -96,8 +100,7 @@ def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, target
             grad_fini = net.backward(grad_ini)
             
             # 4) update the net 
-            optimizer.lr = lr
-            optimizer.step(net)
+            optimizer.step(net, n_epoch = epoch)
             
             error_round_train += Error_round.error_round(targets_train[i:i+batch_size], y_actual)
         
@@ -115,7 +118,7 @@ def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, target
         datanew = pd.DataFrame({'Chi2_train':[Chi2_train], 'Chi2_test':[Chi2_test], 'error_round_train':[error_round_train], 'error_round_test':[error_round_test]})
         Data = Data.append(datanew)
     
-    Data.to_csv('Opt_num_epoch.csv',index=False)
+    Data.to_csv('Opt_num_epoch_backup.csv',index=False)
     
     return Data
     
@@ -129,13 +132,13 @@ def Opt_nbr_epoch() :
     '''
     Evolution of the chi2 et our special round error of the training and testing set according to the number of epoch.
     '''
-    Data = train_prediction(my_NN, data_train_input, data_train_target, data_test_input, data_test_target,  size_training=train_size, num_epochs = Nmax, lr=my_lr, batch_size = my_batch_size)
+    Data = train_prediction(my_NN, data_train_input, data_train_target, data_test_input, data_test_target, num_epochs = Nmax,optimizer = Optimizer.SGD(lr = my_lr) batch_size = my_batch_size)
     print(Data)
-    plt.plot(range(Nmax), Data['error_round_train'], label='training')
-    plt.plot(range(Nmax), Data['error_round_test'], label='testing')
+    plt.plot(range(Nmax), Data['MSE_train'], label='training')
+    plt.plot(range(Nmax), Data['MSE_test'], label='testing')
     
     plt.xlabel('epoch')
-    plt.ylabel(r'percent of false answer $\pm$ 0.4 ')
+    plt.ylabel(r'Mean Squared Error')
     plt.legend()
     
     plt.show()
@@ -145,12 +148,12 @@ def Opt_nbr_epoch() :
 
 def Opt_learning_rate(list_learning_rate):
     for my_lr in list_learning_rate :
-        Data = User.train(my_NN, data_train_input, data_train_target, size_training=train_size, num_epochs = Nmax, lr=my_lr, batch_size = my_batch_size)[1]
+        Data = User.train(my_NN, data_train_input, data_train_target, num_epochs = Nmax, optimizer = Optimizer.SGD(lr = my_lr), batch_size = my_batch_size)[1]
         plt.plot(range(Nmax), Data, label=str(my_lr))
     
     plt.xlabel('epoch')
-    plt.ylabel(' round error')
-    plt.legend(title='learning rate')
+    plt.ylabel(' training mean squared error')
+    plt.legend(title='learning rate impact')
     plt.show()
 
 
