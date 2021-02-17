@@ -46,7 +46,7 @@ The structure of our project is the folowing, please go inside each file to have
 
 
 
-## User's advice
+## User's advices
 
 ### Standard use : write, train and predict with a Neural Network
 
@@ -56,7 +56,39 @@ Basic use of the neural network algorithm is presented in main.py with two examp
 
 The results are presented as an histogram of the prediction and a learning curve for each case.
 
+
+An other possibility is to use SimultaneousNN.py in order to train an neural network with simultaneous learning.
+You will find in this file the definition of this alternative training function and an example of its utilisation.
+
 ### Optimization use
+
+If you want to optimize a neural network, our optimisation functions are in two file.
+
+- Opt_network.py
+    - test_nbr_neuron(list_test) : tests different number of neurons
+    - test_nbr_layer(list_test, n_neuron) : tests different number of hidden layers
+
+- Opt_num_epoch.py
+    - Opt_nbr_epoch() : produce a learning curve (training and testing error according to eppoch) in order to choose the optimal maximal number of epoch
+    - Opt_learning_rate(list_learning_rate) : tests different learning rate
+
+
+## References
+
+- A. Boucaud, Cooking a simple neural network library, April, 2019, https://gitlab.in2p3.fr/ccin2p3-support/formations/workshops-gpu/04-2019/deep-learning/-/blob/master/notebooks/simple_nn_library.ipynb
+ 
+- O.Aflak, Neural Network from scratch in Python, 15 November, 2018, https://towardsdatascience.com/math-neural-network-from-scratch-in-python-d6da9f29ce65
+
+- A.Atakulreka and D.Sutivong, Avoiding Local Minima in Feedforward Neural Networks by Simultaneous Learning, 2007 , http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.2375&rep=rep1&type=pdf
+
+
+
+
+
+
+
+
+
 
 
 
