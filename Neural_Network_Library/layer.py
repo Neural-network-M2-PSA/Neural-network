@@ -9,9 +9,9 @@ GODINAUD Leila, leila.godinaud@gmail.com
 
 """_______layer_____"""
 '''
-This file contains the class Layer, and the classes Linear and activations which inherit of the base class Layer. 
+This file contains the class Layer, and the daughter classes Linear and Activation which inherit of the base class Layer. 
 
-In the class Linear, the inputs are of size (batch_size, input_size) and the outputs are of size 
+In the class Linear, the inputs have size (batch_size, input_size) and the outputs have size 
 (batch_size, output_size).
 In the function forward, inputs shape is (batch_size, input_size).
 In the function backward, grad shape is (batch_size, output_size).
