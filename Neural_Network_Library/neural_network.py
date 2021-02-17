@@ -11,7 +11,8 @@ GODINAUD Leila, leila.godinaud@gmail.com
 '''
 This file contains the class NeuralNet.
 
-In this class, the function forward takes the layers in order and the function backward is the other way around.(???)
+In this class, the function forward takes the layers in order and apply the forward propagation.
+The function backward is the other way around to do the backpropagation through the network.
 
 
 '''
