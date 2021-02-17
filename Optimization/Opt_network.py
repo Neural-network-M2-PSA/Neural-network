@@ -12,9 +12,12 @@ GODINAUD Leila, leila.godinaud@gmail.com
 '''
 This file contains two functions:
 "test_nbr_neuron" tests the impact of the number of neurons in a single hidden layer on the evolution of the error
- according to the epoch for the training set
+ according to the epoch for the training set. It's a function with one argument : the list of number of neurons to test.
+ 
 "test_nbr_layer" tests the impact of the number of hidden layers with the same number of neurons on the evolution 
-of the error according to the epoch for the training set
+of the error according to the epoch for the training set. It's a function with two arguments : the list of number of layer to test
+and a integer, the number of neurons in these layers (always the same).
+
 '''
 # Libraries
 import numpy as np
@@ -29,11 +32,15 @@ import Neural_Network_Library.error_round as Error_round
 import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.user as User
+import Neural_Network_Library.optimizer as Optimizer
 
 plt.close()
-np.random.seed(1)
 
 # Parameters' choice
+
+'''seed '''
+np.random.seed(1)
+
 '''Maximal number of epochs '''
 num_epoch_max = 2000
 
@@ -67,12 +74,14 @@ def test_nbr_neuron(list_test):
     for i in list_test :
         my_layer1 = Layer.Linear(6,i)
         my_layer2 = ActivationFunctions.Tanh()
+        my_layer5 = Layer.Linear(i,i)
+        my_layer6 = ActivationFunctions.Tanh()
         my_layer3 = Layer.Linear(i,1)
         my_layer4 = ActivationFunctions.Sigmoid()
-        my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4])
+        my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer5, my_layer6, my_layer3, my_layer4])
         
         
-        chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target, size_training= train_size, num_epochs = num_epoch_max, lr=my_lr, batch_size=my_batch_size)
+        chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target, num_epochs = num_epoch_max, optimizer = Optimizer.SGD(lr = my_lr), batch_size=my_batch_size)
         
         data_test_prediction = User.prediction(my_NN,data_test_input)
         error_final = Error_round.error_round(data_test_prediction, data_test_target)
@@ -83,7 +92,7 @@ def test_nbr_neuron(list_test):
         plt.ylabel('training round error')
         
         k+=1
-    plt.legend(title='neurons')
+    plt.legend(title='Neurons')
     plt.show()
 
 
@@ -106,7 +115,7 @@ def test_nbr_layer(list_test, n_neuron):
         my_NN = Neural_network.NeuralNet(layers_new)
         
         
-        chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target, size_training= train_size, num_epochs = num_epoch_max, lr=my_lr, batch_size=my_batch_size)
+        chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target, num_epochs = num_epoch_max,optimizer = Optimizer.SGD(lr = my_lr), batch_size=my_batch_size)
         data_test_prediction = User.prediction(my_NN,data_test_input)
         
         error_final = Error_round.error_round(data_test_prediction, data_test_target)
@@ -114,32 +123,9 @@ def test_nbr_layer(list_test, n_neuron):
         plt.plot(range(num_epoch_max), error_list, label= str(i),c=color_list[k])
         plt.plot([num_epoch_max],[error_final], marker='o', c=color_list[k])
         plt.xlabel('epoch')
-        plt.ylabel('round error')
+        plt.ylabel('training round error')
         
         k+=1
-    plt.legend(title='hidden layers')
+    plt.legend(title='Hidden layers')
     plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
