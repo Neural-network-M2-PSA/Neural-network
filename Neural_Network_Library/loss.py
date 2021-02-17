@@ -23,8 +23,6 @@ corresponding to the expected value of the squared error loss. We also compute t
 import numpy as np
 from numpy import ndarray as Tensor
 
-#Imports
-import Neural_Network_Library.gauss as Gauss
 
 class Loss:
 
