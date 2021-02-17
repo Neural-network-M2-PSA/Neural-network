@@ -10,7 +10,11 @@ GODINAUD Leila, leila.godinaud@gmail.com
 """_______main_____"""
 
 '''
-Basic use of the neural network algorithm.
+Basic use of the neural network algorithm with two example :
+- A basic training with the default function loss and optimizer
+- An alternative training with the adaptive learning rate (DecaySGD() as the optimizer)
+
+The results are presented as an histogram of the prediction and a learning curve for each case.
 '''
 
 ## Libraries
