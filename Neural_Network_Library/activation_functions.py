@@ -81,11 +81,19 @@ ____________________________________
 '''
 
 def relu(x: Tensor) -> Tensor:
-    return x
+    if x<0:
+        return 0
+    if x >= 0:
+        return x
 
 def relu_prime(x: Tensor) -> Tensor:
-    return 1
-
+    if x<0:
+        return 0
+    if x == 0:
+        return 0
+    if x>0:
+        return 1
+    
 class Relu(Layer.Activation):
     def __init__(self):
         super().__init__(relu, relu_prime)
