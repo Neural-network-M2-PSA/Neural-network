@@ -65,8 +65,8 @@ my_batch_size=100
 my_lr=0.0005
 
 '''importation of the training and testing data'''
-Data_train = pd.read_csv('D:\data_train.csv')
-Data_test = pd.read_csv('D:\data_test.csv')
+Data_train = pd.read_csv('Data/data_train.csv')
+Data_test = pd.read_csv('Data/data_test.csv')
 
 param = ['cosTBz', 'R2', 'chiProb', 'Ks_distChi', 'm_KSpipi_norm', 'Mbc_norm']
 data_train_input = np.array(Data_train[param][:train_size])

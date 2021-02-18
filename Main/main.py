@@ -74,11 +74,8 @@ my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my
 
 
 ## Importation of the training and testing data
-#data_training_path='Neural-network2/Data/data_train+.csv'
-#data_test_path='Neural-network2/Data/data_test+.csv'
-
-data_training_path='D:\data_train.csv'
-data_test_path='D:\data_test.csv'
+data_training_path='Data/data_train.csv'
+data_test_path='Data/data_test.csv'
 
 Data_train = pd.read_csv(data_training_path)
 Data_test = pd.read_csv(data_test_path)
