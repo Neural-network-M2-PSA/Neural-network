@@ -14,12 +14,14 @@ SGD means Stochastic Gradient Descent with a constant learning rate which is per
 DecaySGD is also a Stochastic Gradient Descent but with an adaptive learning rate : a decay of parameters lr_initial and decay_coeff.
 '''
 
+#Library
+import numpy as np
 
 # Imports
 import Neural_Network_Library.neural_network as Neural_network
 
 class Optimizer:
-    def step(self, net: NeuralNet) -> None:
+    def step(self, net: Neural_network.NeuralNet) -> None:
         raise NotImplementedError
 
 
@@ -28,7 +30,7 @@ class SGD(Optimizer):
         super().__init__()
         self.lr = lr
 
-    def step(self, net: NeuralNet, n_epoch: int = 1) -> None:
+    def step(self, net: Neural_network.NeuralNet, n_epoch: int = 1) -> None:
         for layer in net.layers :
             if layer.type == 'linear':
                 layer.W -= self.lr * layer.grad_w
@@ -41,7 +43,7 @@ class DecaySGD(Optimizer):
         self.initial_lr = initial_lr
         self.decay_coeff = decay_coeff
 
-    def step(self, net: NeuralNet, n_epoch: int = 1) -> None:
+    def step(self, net: Neural_network.NeuralNet, n_epoch: int = 1) -> None:
         for layer in net.layers :
             if layer.type == 'linear':
                 layer.W -= self.initial_lr * np.exp(-self.decay_coeff *n_epoch)* layer.grad_w

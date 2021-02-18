@@ -132,7 +132,7 @@ def Opt_nbr_epoch() :
     '''
     Evolution of the chi2 et our special round error of the training and testing set according to the number of epoch.
     '''
-    Data = train_prediction(my_NN, data_train_input, data_train_target, data_test_input, data_test_target, num_epochs = Nmax,optimizer = Optimizer.SGD(lr = my_lr) batch_size = my_batch_size)
+    Data = train_prediction(my_NN, data_train_input, data_train_target, data_test_input, data_test_target, num_epochs = Nmax,optimizer = OptimizerClass.SGD(lr = my_lr), batch_size = my_batch_size)
     print(Data)
     plt.plot(range(Nmax), Data['MSE_train'], label='training')
     plt.plot(range(Nmax), Data['MSE_test'], label='testing')
@@ -148,7 +148,7 @@ def Opt_nbr_epoch() :
 
 def Opt_learning_rate(list_learning_rate):
     for my_lr in list_learning_rate :
-        Data = User.train(my_NN, data_train_input, data_train_target, num_epochs = Nmax, optimizer = Optimizer.SGD(lr = my_lr), batch_size = my_batch_size)[1]
+        Data = User.train(my_NN, data_train_input, data_train_target, num_epochs = Nmax, optimizer = OptimizerClass.SGD(lr = my_lr), batch_size = my_batch_size)[1]
         plt.plot(range(Nmax), Data, label=str(my_lr))
     
     plt.xlabel('epoch')

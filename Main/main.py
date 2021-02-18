@@ -74,8 +74,11 @@ my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my
 
 
 ## Importation of the training and testing data
-data_training_path='Neural-network2/Data/data_train+.csv'
-data_test_path='Neural-network2/Data/data_test+.csv'
+#data_training_path='Neural-network2/Data/data_train+.csv'
+#data_test_path='Neural-network2/Data/data_test+.csv'
+
+data_training_path='D:\data_train.csv'
+data_test_path='D:\data_test.csv'
 
 Data_train = pd.read_csv(data_training_path)
 Data_test = pd.read_csv(data_test_path)
@@ -133,7 +136,7 @@ print('\nAlternative example of utilisation (adaptative learning rate) :')
 
 ''' training'''
 
-chi2_list, error_list = lib2.train(my_NN, data_train_input, data_train_target, num_epochs = my_num_epochs, batch_size=my_batch_size, optimizer = Optimizer.DecaySGD(initial_lr= my_initial_lr, decay_coeff= my_decay_coeff) )
+chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target, num_epochs = my_num_epochs, batch_size=my_batch_size, optimizer = Optimizer.DecaySGD(initial_lr= my_initial_lr, decay_coeff= my_decay_coeff) )
 
 plt.figure()
 plt.plot(range(my_num_epochs), chi2_list)
