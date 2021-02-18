@@ -28,7 +28,7 @@ import Neural_Network_Library.activation_functions as ActivationFunctions
 import Neural_Network_Library.neural_network as Neural_network
 import Neural_Network_Library.user as User
 import Neural_Network_Library.optimizer as Optimizer
-import Neural_Network_Library.error_round as error_round2
+import Neural_Network_Library.error_round as Error_round
 
 
 import Optimization.Opt_network
@@ -111,7 +111,7 @@ plt.title('Evolution of the training error : basic example')
 '''testing '''
 data_test_prediction = User.prediction(my_NN,data_test_input)
 
-error = error_round2.error_round(data_test_prediction, data_test_target)
+error = Error_round.error_round(data_test_prediction, data_test_target)
 print('% false error for testing set : ', error)
 
 
@@ -155,7 +155,7 @@ plt.title('Adaptative learning rate')
 '''testing '''
 data_test_prediction = User.prediction(my_NN,data_test_input)
 
-error = error_round2.error_round(data_test_prediction, data_test_target)
+error = Error_round.error_round(data_test_prediction, data_test_target)
 print('% false error for testing set : ', error)
 
 

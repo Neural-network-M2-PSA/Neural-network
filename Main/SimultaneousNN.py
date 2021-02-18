@@ -6,10 +6,17 @@
 
 
 ## importations
-import Librairie_v2 as lib2
+
 import numpy as np
 from numpy import ndarray as Tensor
 import pandas as pd
+
+import Neural_Network_Library.optimizer as OptimizerClass
+import Neural_Network_Library.user as User
+import Neural_Network_Library.layer as Layer
+import Neural_Network_Library.activation_functions as ActivationFunctions
+import Neural_Network_Library.neural_network as Neural_network
+import Neural_Network_Library.error_round as Error_round
 
 import matplotlib.pyplot as plt
 plt.close()
@@ -45,7 +52,7 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 ## Modified function
 
-def train_simultaneousNN( inputs_train: Tensor, targets_train: Tensor, loss: lib2.Loss = lib2.MeanSquareError(), optimizer: lib2.Optimizer = lib2.SGD(), num_epochs: int = 5000, batch_size : int = 32) -> None:
+def train_simultaneousNN( inputs_train: Tensor, targets_train: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size : int = 32) -> None:
     
     size_training = inputs_train.shape[0]
     Result_chi2 = [[],[],[],[],[],[],[],[],[]]
@@ -55,13 +62,13 @@ def train_simultaneousNN( inputs_train: Tensor, targets_train: Tensor, loss: lib
     list_net =[]
     for i in range(9) :
         layers=[]
-        layers.append(lib2.Linear(6,4))
-        layers.append(lib2.Tanh())
-        layers.append(lib2.Linear(4,2))
-        layers.append(lib2.Tanh())
-        layers.append(lib2.Linear(2,1))
-        layers.append(lib2.Sigmoid())
-        list_net.append(lib2.NeuralNet(layers))
+        layers.append(Layer.Linear(6,4))
+        layers.append(ActivationFunctions.Tanh())
+        layers.append(Layer.Linear(4,2))
+        layers.append(ActivationFunctions.Tanh())
+        layers.append(Layer.Linear(2,1))
+        layers.append(ActivationFunctions.Sigmoid())
+        list_net.append(Neural_network.NeuralNet(layers))
     
     destroyed_NN=[]
     nbr_batch=size_training//batch_size
@@ -117,7 +124,7 @@ def train_simultaneousNN( inputs_train: Tensor, targets_train: Tensor, loss: lib
 
 ## User's function
 
-Results = train_simultaneousNN(data_train_input, data_train_target, num_epochs = Nmax, optimizer = lib2.SGD(lr = my_lr), batch_size=my_batch_size)
+Results = train_simultaneousNN(data_train_input, data_train_target, num_epochs = Nmax, optimizer = OptimizerClass.SGD(lr = my_lr), batch_size=my_batch_size)
 
 
 for k in range(9) :
@@ -131,9 +138,9 @@ plt.show()
 
 
 '''testing '''
-data_test_prediction = lib2.prediction(Results[0],data_test_input)
+data_test_prediction = User.prediction(Results[0],data_test_input)
 
-error = lib2.error_round(data_test_prediction, data_test_target)
+error = Error_round.error_round(data_test_prediction, data_test_target)
 print('% false error for testing set : ', error)
 
 
