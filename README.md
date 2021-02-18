@@ -60,6 +60,15 @@ The results are presented as an histogram of the prediction and a learning curve
 An other possibility is to use SimultaneousNN.py in order to train an neural network with simultaneous learning.
 You will find in this file the definition of this alternative training function and an example of its utilisation.
 
+To compare the performances of our NN, we made a very basic NN with keras of tensorflow. This NN has the same 
+properties as ours: same number of layers, activation functions, training size, testing size and learning rate. 
+In the compile method, we choose the mean square error for the loss function, SGD for the optimizer with the
+learning rate of 0.01. If we fit this model with a number of epochs egal to 5000 and a batch\_size of 100,
+we obtain an accuracy of 0.86. This is coherent with ours previous results.
+
+Link of the colaboratory of the keras NN : 
+https://colab.research.google.com/drive/14BAD2qQf6H6PiBS18YoFzTYiymhBXqI4#scrollTo=bR3puNEJLJp8
+
 ### Optimization use
 
 If you want to optimize a neural network, our optimisation functions are in two file.
