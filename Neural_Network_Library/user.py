@@ -37,7 +37,7 @@ import Neural_Network_Library.optimizer as OptimizerClass
 
 
 def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: Loss = Loss.MeanSquareError(),
-          optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size: int = 32) -> list:
+          optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size: int = 32) -> tuple:
     chi2_list = []; round_error_list = []
     size_training = inputs.shape[0] 
     for epoch in range(num_epochs):
@@ -76,5 +76,5 @@ def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: 
     return chi2_list, round_error_list
 
 
-def prediction(net: Neural_network.NeuralNet, inputs: Tensor) -> None:
+def prediction(net: Neural_network.NeuralNet, inputs: Tensor) -> Tensor:
     return net.forward(inputs)
