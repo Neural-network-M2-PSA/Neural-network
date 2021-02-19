@@ -60,7 +60,7 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 ## Modified function
 
-def train_simultaneousNN( inputs_train: Tensor, targets_train: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size : int = 32) -> None:
+def train_simultaneousNN( inputs_train: Tensor, targets_train: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size : int = 32) -> tuple:
     
     size_training = inputs_train.shape[0]
     Result_chi2 = [[],[],[],[],[],[],[],[],[]]
