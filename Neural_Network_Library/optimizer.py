@@ -21,7 +21,7 @@ import numpy as np
 import Neural_Network_Library.neural_network as Neural_network
 
 class Optimizer:
-    def step(self, net: Neural_network.NeuralNet) -> None:
+    def step(self, net: Neural_network.NeuralNet,n_epoch: int = 1) -> None:
         raise NotImplementedError
 
 
