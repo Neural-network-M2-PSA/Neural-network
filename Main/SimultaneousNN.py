@@ -6,7 +6,7 @@ BRUANT Quentin, quentinbruant92@gmail.com
 GODINAUD Leila, leila.godinaud@gmail.com
 
 """
-"""_______Simultaneous Neural Network_____"""
+"""_______SimultaneousNN_____"""
 
 '''
 
