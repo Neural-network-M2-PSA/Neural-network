@@ -100,7 +100,7 @@ def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, target
             grad_fini = net.backward(grad_ini)
             
             # 4) update the net 
-            optimizer.step(net, n_epoch = epoch)
+            OptimizerClass.step(net, n_epoch = epoch)
             
             error_round_train += Error_round.error_round(targets_train[i:i+batch_size], y_actual)
         

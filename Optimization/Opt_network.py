@@ -110,7 +110,7 @@ def test_nbr_layer(list_test, n_neuron):
     for i in list_test :
         layers_new = [my_layerini1, my_layerini2]
         for j in range(i) :
-            layers_new += [Layer.Linear(n_neuron,n_neuron),Layer.Tanh()]
+            layers_new += [Layer.Linear(n_neuron,n_neuron),ActivationFunctions.Tanh()]
         layers_new += [my_layerfini1, my_layerfini2]
         my_NN = Neural_network.NeuralNet(layers_new)
         
