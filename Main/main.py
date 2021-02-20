@@ -22,18 +22,20 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import os as os
+path_ini = os.getcwd()
+
 ## importations
-import Neural_Network_Library.layer as Layer
-import Neural_Network_Library.activation_functions as ActivationFunctions
-import Neural_Network_Library.neural_network as Neural_network
-import Neural_Network_Library.user as User
-import Neural_Network_Library.optimizer as Optimizer
-import Neural_Network_Library.error_round as Error_round
 
+path= path_ini[:-4]+'Neural_Network_Library' #changement dans cette section
+os.chdir(path)
 
-import Optimization.Opt_network
-import Optimization.Opt_num_epoch
-import Function_Tests.Test
+import layer as Layer
+import activation_functions as ActivationFunctions
+import neural_network as Neural_network
+import user as User
+import optimizer as Optimizer
+import error_round as Error_round
 
 plt.close()
 
@@ -74,6 +76,8 @@ my_NN = Neural_network.NeuralNet([my_layer1, my_layer2, my_layer3, my_layer4, my
 
 
 ## Importation of the training and testing data
+os.chdir(path_ini[:-4])
+
 data_training_path='Data/data_train.csv'
 data_test_path='Data/data_test.csv'
 
@@ -101,15 +105,15 @@ print('basic example of utilisation :')
 chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target , num_epochs = my_num_epochs, optimizer = Optimizer.SGD(lr=my_lr), batch_size=my_batch_size)
 
 plt.plot(range(my_num_epochs), chi2_list)
-plt.xlabel('epoch')
-plt.ylabel('mean squared error')
+plt.xlabel('Epoch')
+plt.ylabel('Mean squared error')
 plt.title('Evolution of the training error : basic example')
 
 '''testing '''
 data_test_prediction = User.prediction(my_NN,data_test_input)
 
 error = Error_round.error_round(data_test_prediction, data_test_target)
-print('% false error for testing set : ', error)
+print('% of false error for testing set : ', error)
 
 
 '''histogram of predictions'''
@@ -122,8 +126,8 @@ kwargs = dict(histtype="stepfilled", alpha=0.5, bins=25)
 plt.hist(S, **kwargs, label ='Signal')
 plt.hist(B, **kwargs, label='Noise')
 plt.legend(loc="upper center")
-plt.xlabel('predictions for testing set')
-plt.ylabel('number of answer')
+plt.xlabel('Predictions for testing set')
+plt.ylabel('Number of answer')
 plt.title('Basic use')
 
 
@@ -137,26 +141,26 @@ chi2_list, error_list = User.train(my_NN, data_train_input, data_train_target, n
 
 plt.figure()
 plt.plot(range(my_num_epochs), chi2_list)
-plt.xlabel('epoch')
-plt.ylabel('mean squared error')
+plt.xlabel('Epoch')
+plt.ylabel('M squared error')
 plt.title('Evolution of the training error : adaptative learning rate')
 
 plt.figure()
 x=np.array(range(my_num_epochs))
 plt.plot(x, my_initial_lr * np.exp(-my_decay_coeff *x))
-plt.xlabel('epoch')
-plt.ylabel('learning rate')
-plt.title('Adaptative learning rate')
+plt.xlabel('Epoch')
+plt.ylabel('Learning rate')
+plt.title('Decay learning rate')
 
 
 '''testing '''
 data_test_prediction = User.prediction(my_NN,data_test_input)
 
 error = Error_round.error_round(data_test_prediction, data_test_target)
-print('% false error for testing set : ', error)
+print('% of false error for testing set : ', error)
 
 
-'''histogram of predictions and ROC curve '''
+'''histogram of predictions'''
 plt.figure()
 S = data_test_prediction[data_test_target==1]
 B = data_test_prediction[data_test_target==0]
@@ -166,9 +170,9 @@ B = data_test_prediction[data_test_target==0]
 plt.hist(S, **kwargs, label ='Signal')
 plt.hist(B, **kwargs, label='Noise')
 plt.legend(loc="upper center")
-plt.xlabel('predictions for testing set')
-plt.ylabel('number of answer')
-plt.title('Alternative use')
+plt.xlabel('Predictions for testing set')
+plt.ylabel('Number of answer')
+plt.title('Alternative use : adaptative learning rate')
 
 print('\n')
 plt.show()
