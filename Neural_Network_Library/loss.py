@@ -26,7 +26,7 @@ from numpy import ndarray as Tensor
 
 class Loss:
 
-    def loss(self, predicted: Tensor, actual: Tensor) -> float:
+    def loss(self, predicted: Tensor, actual: Tensor) -> Tensor:
         raise NotImplementedError
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
@@ -35,7 +35,7 @@ class Loss:
 
 class MeanSquareError(Loss):
 
-    def loss(self, predicted: Tensor, actual: Tensor) -> float:
+    def loss(self, predicted: Tensor, actual: Tensor) -> Tensor:
         return np.mean((predicted - actual) ** 2)
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
