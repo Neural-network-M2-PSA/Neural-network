@@ -18,7 +18,7 @@ DecaySGD is also a Stochastic Gradient Descent but with an adaptive learning rat
 import numpy as np
 
 # Imports
-import Neural_Network_Library.neural_network as Neural_network
+import neural_network as Neural_network
 
 class Optimizer:
     def step(self, net: Neural_network.NeuralNet,n_epoch: int = 1) -> None:
