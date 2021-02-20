@@ -31,7 +31,7 @@ from numpy import ndarray as Tensor
 
 #Imports
 import error_round as Error_round
-importloss as Loss
+import loss as Loss
 import neural_network as Neural_network
 import optimizer as OptimizerClass
 
