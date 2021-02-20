@@ -21,7 +21,7 @@ import numpy as np
 from numpy import ndarray as Tensor
 
 #Imports
-import Neural_Network_Library.layer as Layer
+import layer as Layer
 
 '''
 ____________________________________
