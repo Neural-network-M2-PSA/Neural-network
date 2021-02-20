@@ -19,12 +19,18 @@ import numpy as np
 from numpy import ndarray as Tensor
 import pandas as pd
 
-import Neural_Network_Library.optimizer as OptimizerClass
-import Neural_Network_Library.user as User
-import Neural_Network_Library.layer as Layer
-import Neural_Network_Library.activation_functions as ActivationFunctions
-import Neural_Network_Library.neural_network as Neural_network
-import Neural_Network_Library.error_round as Error_round
+import os as os
+path_ini = os.getcwd()
+path= path_ini[:-4]+'Neural_Network_Library'
+os.chdir(path)
+
+import optimizer as OptimizerClass
+import user as User
+import layer as Layer
+import activation_functions as ActivationFunctions
+import neural_network as Neural_network
+import error_round as Error_round
+import loss as Loss
 
 import matplotlib.pyplot as plt
 plt.close()
@@ -141,6 +147,7 @@ for k in range(9) :
     plt.plot(X,Y)
 plt.ylabel('Mean Squared Error')
 plt.xlabel('epoch')
+plt.title('Simultaneous learning : 9 NN')
 plt.show()
 
 
@@ -149,7 +156,7 @@ plt.show()
 data_test_prediction = User.prediction(Results[0],data_test_input)
 
 error = Error_round.error_round(data_test_prediction, data_test_target)
-print('% false error for testing set : ', error)
+print('% of false error for testing set : ', error)
 
 
 '''histogram of predictions'''
@@ -162,22 +169,9 @@ kwargs = dict(histtype="stepfilled", alpha=0.5, bins=25)
 plt.hist(S, **kwargs, label ='Signal')
 plt.hist(B, **kwargs, label='Noise')
 plt.legend(loc="upper center")
-plt.xlabel('predictions for testing set')
-plt.ylabel('number of answer')
+plt.xlabel('Predictions for testing set')
+plt.ylabel('Number of answer')
 plt.title('Simultaneous NN')
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
