@@ -125,6 +125,7 @@ def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, target
         datanew = pd.DataFrame({'MSE_train':[Chi2_train], 'MSE_test':[Chi2_test], 'error_round_train':[error_round_train], 'error_round_test':[error_round_test]})
         Data = Data.append(datanew)
     
+    os.chdir(path_ini)
     Data.to_csv('Opt_num_epoch_backup.csv',index=False)
     
     return Data
