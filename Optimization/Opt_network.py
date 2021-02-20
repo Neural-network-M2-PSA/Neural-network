@@ -94,8 +94,8 @@ def test_nbr_neuron(list_test):
 
         plt.plot(range(num_epoch_max), error_list, label= str(i), c=color_list[k])
         plt.plot([num_epoch_max],[error_final], marker='o', c=color_list[k])
-        plt.xlabel('epoch')
-        plt.ylabel('training round error')
+        plt.xlabel('Epoch')
+        plt.ylabel('Training round error')
         
         k+=1
     plt.legend(title='Neurons')
@@ -129,8 +129,8 @@ def test_nbr_layer(list_test, n_neuron):
         
         plt.plot(range(num_epoch_max), error_list, label= str(i),c=color_list[k])
         plt.plot([num_epoch_max],[error_final], marker='o', c=color_list[k])
-        plt.xlabel('epoch')
-        plt.ylabel('training round error')
+        plt.xlabel('Epoch')
+        plt.ylabel('Training round error')
         
         k+=1
     plt.legend(title='Hidden layers')
