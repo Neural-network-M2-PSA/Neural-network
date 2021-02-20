@@ -9,7 +9,9 @@ GODINAUD Leila, leila.godinaud@gmail.com
 """_______SimultaneousNN_____"""
 
 '''
-
+Improved method thanks to simultaneous learning
+See : http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.2375&rep=rep1&type=pdf
+for more informations
 '''
 
 
@@ -148,7 +150,6 @@ for k in range(9) :
 plt.ylabel('Mean Squared Error')
 plt.xlabel('epoch')
 plt.title('Simultaneous learning : 9 NN')
-plt.show()
 
 
 
@@ -173,5 +174,5 @@ plt.xlabel('Predictions for testing set')
 plt.ylabel('Number of answer')
 plt.title('Simultaneous NN')
 
-
+plt.show()
 
