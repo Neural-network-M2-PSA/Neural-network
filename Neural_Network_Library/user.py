@@ -69,9 +69,9 @@ def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: 
 
         # Print status every 50 iterations
         if epoch % 50 == 0:
-            print('\r epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training chi2 error : " + str(chi2_loss) + "\r",
+            print('\r epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training mean squared error : " + str(chi2_loss) + "\r",
                   end="")
-    print('epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training final chi2 error : " + str(chi2_loss) + '\n')
+    print('epoch : ' + str(epoch) + "/" + str(num_epochs) + ", training final mean squared error : " + str(chi2_loss) + '\n')
 
     return chi2_list, round_error_list
 
