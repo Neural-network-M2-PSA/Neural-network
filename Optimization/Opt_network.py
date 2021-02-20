@@ -24,15 +24,19 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import os as os
+path_ini = os.getcwd()
+path= path_ini[:-12]+'Neural_Network_Library' #changement dans cette section
+os.chdir(path)
+
 # Imports
 
-
-import Neural_Network_Library.layer as Layer
-import Neural_Network_Library.error_round as Error_round
-import Neural_Network_Library.activation_functions as ActivationFunctions
-import Neural_Network_Library.neural_network as Neural_network
-import Neural_Network_Library.user as User
-import Neural_Network_Library.optimizer as Optimizer
+import layer as Layer
+import error_round as Error_round
+import activation_functions as ActivationFunctions
+import neural_network as Neural_network
+import user as User
+import optimizer as Optimizer
 
 plt.close()
 
@@ -55,6 +59,8 @@ my_batch_size=100
 my_lr=0.001
 
 '''importation of the training and testing data'''
+
+os.chdir(path_ini[:-12])
 Data_train = pd.read_csv('Data/data_train.csv')
 param = ['cosTBz', 'R2', 'chiProb', 'Ks_distChi', 'm_KSpipi_norm', 'Mbc_norm']
 data_train_input = np.array(Data_train[param][:train_size])
@@ -93,6 +99,7 @@ def test_nbr_neuron(list_test):
         
         k+=1
     plt.legend(title='Neurons')
+    plt.title('Optimisation of the number of neurons')
     plt.show()
 
 
@@ -127,5 +134,6 @@ def test_nbr_layer(list_test, n_neuron):
         
         k+=1
     plt.legend(title='Hidden layers')
+    plt.title('Optimisation of the number of hidden layers')
     plt.show()
 
