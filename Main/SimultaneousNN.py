@@ -55,6 +55,7 @@ my_batch_size=100
 my_lr=0.0001
 
 '''importation of the training and testing data'''
+os.chdir(path_ini[:-4])
 Data_train = pd.read_csv('Data/data_train.csv')
 Data_test = pd.read_csv('Data/data_test.csv')
 
@@ -148,8 +149,8 @@ for k in range(9) :
     X = range(len(Y))
     plt.plot(X,Y)
 plt.ylabel('Mean Squared Error')
-plt.xlabel('epoch')
-plt.title('Simultaneous learning : 9 NN')
+plt.xlabel('Epoch')
+plt.title('Simultaneous NN : training curve')
 
 
 
@@ -172,7 +173,7 @@ plt.hist(B, **kwargs, label='Noise')
 plt.legend(loc="upper center")
 plt.xlabel('Predictions for testing set')
 plt.ylabel('Number of answer')
-plt.title('Simultaneous NN')
+plt.title('Simultaneous NN : histogram of predictions')
 
 plt.show()
 
