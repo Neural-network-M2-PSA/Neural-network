@@ -30,10 +30,10 @@ from numpy import ndarray as Tensor
 
 
 #Imports
-import Neural_Network_Library.error_round as error_round2
-import Neural_Network_Library.loss as Loss
-import Neural_Network_Library.neural_network as Neural_network
-import Neural_Network_Library.optimizer as OptimizerClass
+import error_round as Error_round
+importloss as Loss
+import neural_network as Neural_network
+import optimizer as OptimizerClass
 
 
 def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: Loss = Loss.MeanSquareError(),
@@ -53,7 +53,7 @@ def train(net: Neural_network.NeuralNet, inputs: Tensor, targets: Tensor, loss: 
 
             # 2) Compute the loss and the gradient
             chi2_loss += loss.loss(targets[i:i + batch_size], y_actual)
-            round_error_loss += error_round2.error_round(targets[i:i + batch_size], y_actual)
+            round_error_loss += Error_round.error_round(targets[i:i + batch_size], y_actual)
             grad_ini = loss.grad(targets[i:i + batch_size], y_actual)
 
             # 3) Feed backwards
