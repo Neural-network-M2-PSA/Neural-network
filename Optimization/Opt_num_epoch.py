@@ -25,14 +25,19 @@ from numpy import ndarray as Tensor
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import os as os
+path_ini = os.getcwd()
+path= path_ini[:-12]+'Neural_Network_Library' #changement dans cette section
+os.chdir(path)
+
 # Imports
-import Neural_Network_Library.loss as Loss
-import Neural_Network_Library.layer as Layer
-import Neural_Network_Library.error_round as Error_round
-import Neural_Network_Library.activation_functions as ActivationFunctions
-import Neural_Network_Library.neural_network as Neural_network
-import Neural_Network_Library.optimizer as OptimizerClass
-import Neural_Network_Library.user as User
+import loss as Loss
+import layer as Layer
+import error_round as Error_round
+import activation_functions as ActivationFunctions
+import neural_network as Neural_network
+import optimizer as OptimizerClass
+import user as User
 
 
 plt.close()
@@ -65,6 +70,8 @@ my_batch_size=100
 my_lr=0.0005
 
 '''importation of the training and testing data'''
+
+os.chdir(path_ini[:-12]) #changement ici
 Data_train = pd.read_csv('Data/data_train.csv')
 Data_test = pd.read_csv('Data/data_test.csv')
 
@@ -78,7 +85,7 @@ data_test_target = np.array(Data_test[['isSignal']][:test_size])
 
 # Modified training function
 
-def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size : int = 32) -> None:
+def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, targets_train: Tensor, inputs_test: Tensor, targets_test: Tensor, loss: Loss.Loss = Loss.MeanSquareError(), optimizer: OptimizerClass.Optimizer = OptimizerClass.SGD(), num_epochs: int = 5000, batch_size : int = 32):
     Data = pd.DataFrame(columns = ('MSE_train', 'MSE_test', 'error_round_train', 'error_round_test'))
     size_training = inputs_train.shape[0]
     for epoch in range(num_epochs):
@@ -115,7 +122,7 @@ def train_prediction(net: Neural_network.NeuralNet, inputs_train: Tensor, target
         if epoch % 100 == 0:
             print('epoch : '+str(epoch)+"/"+str(num_epochs)+"\r", end="")
     
-        datanew = pd.DataFrame({'Chi2_train':[Chi2_train], 'Chi2_test':[Chi2_test], 'error_round_train':[error_round_train], 'error_round_test':[error_round_test]})
+        datanew = pd.DataFrame({'MSE_train':[Chi2_train], 'MSE_test':[Chi2_test], 'error_round_train':[error_round_train], 'error_round_test':[error_round_test]})
         Data = Data.append(datanew)
     
     Data.to_csv('Opt_num_epoch_backup.csv',index=False)
@@ -137,9 +144,10 @@ def Opt_nbr_epoch() :
     plt.plot(range(Nmax), Data['MSE_train'], label='training')
     plt.plot(range(Nmax), Data['MSE_test'], label='testing')
     
-    plt.xlabel('epoch')
+    plt.xlabel('Epoch')
     plt.ylabel(r'Mean Squared Error')
     plt.legend()
+    plt.title('Learning Curve')
     
     plt.show()
 
@@ -151,9 +159,9 @@ def Opt_learning_rate(list_learning_rate):
         Data = User.train(my_NN, data_train_input, data_train_target, num_epochs = Nmax, optimizer = OptimizerClass.SGD(lr = my_lr), batch_size = my_batch_size)[1]
         plt.plot(range(Nmax), Data, label=str(my_lr))
     
-    plt.xlabel('epoch')
-    plt.ylabel(' training mean squared error')
-    plt.legend(title='learning rate impact')
+    plt.xlabel('Epoch')
+    plt.ylabel(' Training mean squared error')
+    plt.legend(title='Learning rate impact')
     plt.show()
 
 
