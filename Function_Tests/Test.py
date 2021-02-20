@@ -18,12 +18,18 @@ learns something.
 # Library
 import numpy as np
 
+import os as os
+path_ini = os.getcwd()
+
+path= path_ini[:-14]+'Neural_Network_Library' #changement dans cette section
+os.chdir(path)
+
 # Imports
-import Neural_Network_Library.loss as Loss
-import Neural_Network_Library.layer as Layer
-import Neural_Network_Library.activation_functions as ActivationFunctions
-import Neural_Network_Library.neural_network as Neural_network
-import Neural_Network_Library.user as User
+import loss as Loss
+import layer as Layer
+import activation_functions as ActivationFunctions
+import neural_network as Neural_network
+import user as User
 
 
 def test_MeanSquareError() :
@@ -70,7 +76,7 @@ def test_train_prediction() :
     input = np.array([[1,2,3],[4,5,6]])
     target = np.array([[0.5,0.2],[0.1,0.3]])
     
-    User.train(my_NN, input, target, batch_size = 1,size_training=2)
+    User.train(my_NN, input, target, batch_size = 1)
     #By careful, we must have size_training = number of rows in our data
     
     input_predict = np.array([[1,1,4],[0.5,2,4]])
@@ -89,7 +95,7 @@ def test_XOR() :
     input =np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
     target = np.array([[0], [1], [1], [0]])
     
-    User.train(my_NN, input, target, batch_size = 1,size_training=4,num_epochs= 10000)
+    User.train(my_NN, input, target, batch_size = 1,,num_epochs= 1000)
     # By careful, we must have size_training = number of rows in our data
     
     input_predict = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
