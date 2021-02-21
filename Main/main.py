@@ -37,6 +37,16 @@ import user as User
 import optimizer as Optimizer
 import error_round as Error_round
 
+'''
+## importations
+import Neural_Network_Library.layer as Layer
+import Neural_Network_Library.activation_functions as ActivationFunctions
+import Neural_Network_Library.neural_network as Neural_network
+import Neural_Network_Library.user as User
+import Neural_Network_Library.optimizer as Optimizer
+import Neural_Network_Library.error_round as Error_round
+'''
+
 plt.close()
 
 ## Parameters' choice

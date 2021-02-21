@@ -31,6 +31,17 @@ import activation_functions as ActivationFunctions
 import neural_network as Neural_network
 import user as User
 
+'''
+## Imports
+
+import Neural_Network_Library.loss as Loss
+import Neural_Network_Library.layer as Layer
+import Neural_Network_Library.activation_functions as ActivationFunctions
+import Neural_Network_Library.neural_network as Neural_network
+import Neural_Network_Library.user as User
+
+'''
+
 
 def test_MeanSquareError() :
     predicted = np.array([[1, 1, 1, 1, 1, 1],[2,4,5,6,8,1]])
