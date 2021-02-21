@@ -19,6 +19,8 @@ the simultaneous learning.
 The data set we use, allowed to answer to an praticle problem of particle physics :
 how to separate Signal from Noise on an observed event ?
 We also prepare these data set thanks to pre-processing algorithms.
+After constraining the varibles in the [0,1] interval when needed, we construct the histogramms of these variables, then we build the cumulative function of the signal only.
+By assigning the variables of a given event to its value in their respective cumulative functions, we separate the signal and the noise.
 
 ## Structure
 
